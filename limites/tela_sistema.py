@@ -64,7 +64,7 @@ class TelaSistema(Tela):
 
     def init_components(self):
         #sg.theme_previewer()
-        sg.ChangeLookAndFeel('LightBlue2')
+        sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('Bem vindo ao Sistema de Restaurante!', font=("Helvica",25))],
             [sg.Text('Escolha sua opção', font=("Helvica",15))],
