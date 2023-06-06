@@ -75,6 +75,6 @@ class TelaSistema(Tela):
             [sg.Radio('Reservas',"RD1", key='5')],
             [sg.Radio('Pedidos',"RD1", key='6')],
             [sg.Radio('Finalizar sistema',"RD1", key='0')],
-            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+            [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
