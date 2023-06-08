@@ -1,7 +1,7 @@
 from limites.tela import Tela
 from limites.tela_sistema import TelaSistema
 
-
+'''
 class TelaMesa(Tela):
 
     def tela_opcoes(self):
@@ -13,7 +13,7 @@ class TelaMesa(Tela):
         print(" 5 - Voltar")
         opcao = self.le_num_inteiro("Escolha a opção: ", [0, 1, 2, 3, 4, 5])
         return opcao
-       
+
 
     def pega_dados_mesa(self):
         print("-------- DADOS MESA ----------")
@@ -51,4 +51,102 @@ class TelaMesa(Tela):
                 print("\nInsira um valor válido! O número da mesa deve ser um valor inteiro!")
                 print("\n")
 
+'''
 
+import PySimpleGUI as sg
+
+
+class TelaMesa():
+    def __init__(self):
+        self.__window = None
+        self.init_opcoes()
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    def tela_opcoes(self):
+        self.init_opcoes()
+        button, values = self.open()
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        if values['3']:
+            opcao = 3
+        if values['4']:
+            opcao = 4
+        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
+        # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
+        return opcao
+
+    def init_opcoes(self):
+        # sg.theme_previewer()
+        sg.ChangeLookAndFeel('DarkTeal4')
+        layout = [
+            [sg.Text('-------- MESAS ----------', font=("Helvica", 25))],
+            [sg.Text('Escolha sua opção', font=("Helvica", 15))],
+            [sg.Radio('Incluir Mesa', "RD1", key='1')],
+            [sg.Radio('Alterar Mesa', "RD1", key='2')],
+            [sg.Radio('Listar Mesa', "RD1", key='3')],
+            [sg.Radio('Excluir Mesa', "RD1", key='4')],
+            [sg.Radio('Retornar', "RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
+    def pega_dados_mesa(self):
+        sg.ChangeLookAndFeel('DarkTeal4')
+        layout = [
+            [sg.Text('-------- DADOS MESA ----------', font=("Helvica", 25))],
+            [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
+            [sg.Text('Capacidade:', size=(15, 1)), sg.InputText('', key='capacidade')],
+            [sg.Cancel('Cancelar'), sg.Button('Confirmar')]
+        ]
+        self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+
+        button, values = self.open()
+        numero = values['numero']
+        capacidade = values['capacidade']
+
+        self.close()
+        return {"numero": numero, "capacidade": capacidade}
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    def mostra_dados_mesa(self, dados_mesa):
+        string_todas_mesas = ""
+        print(dados_mesa)
+        for mesa in dados_mesa:
+            print(dados_mesa)
+            string_todas_mesas = string_todas_mesas + "NÚMERO DA MESA: " + dados_mesa["numero"] + '\n'
+            string_todas_mesas = string_todas_mesas + "CAPACIDADE DA MESA: " + dados_mesa["capacidade"] + '\n'
+
+        sg.Popup('-------- LISTA DE MESAS ----------', string_todas_mesas)
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    def seleciona_mesa(self):
+        sg.ChangeLookAndFeel('DarkTeal4')
+        layout = [
+            [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='num_mesa')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Seleciona mesa').Layout(layout)
+
+        button, values = self.open()
+        num_mesa = values['num_mesa']
+        self.close()
+        return num_mesa
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
+
+    def close(self):
+        self.__window.Close()
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
