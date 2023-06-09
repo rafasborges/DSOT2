@@ -82,7 +82,7 @@ class TelaMesa():
 
     def init_opcoes(self):
         # sg.theme_previewer()
-        sg.ChangeLookAndFeel('DarkTeal4')
+        sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('-------- MESAS ----------', font=("Helvica", 25))],
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
@@ -98,7 +98,7 @@ class TelaMesa():
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_mesa(self):
-        sg.ChangeLookAndFeel('DarkTeal4')
+        sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('-------- DADOS MESA ----------', font=("Helvica", 25))],
             [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
@@ -119,14 +119,13 @@ class TelaMesa():
         string_todas_mesas = ""
         for mesa in dados_mesa:
             string_todas_mesas = string_todas_mesas + "NÚMERO DA MESA: " + str(mesa["numero"]) + '\n'
-            string_todas_mesas = string_todas_mesas + "CAPACIDADE DA MESA: " + str(mesa["capacidade"]) + '\n'
-            print('\n')
-            
+            string_todas_mesas = string_todas_mesas + "CAPACIDADE DA MESA: " + str(mesa["capacidade"]) + '\n\n'
+
         sg.Popup('-------- LISTA DE MESAS ----------', string_todas_mesas)
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_mesa(self):
-        sg.ChangeLookAndFeel('DarkTeal4')
+        sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
             [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
