@@ -12,7 +12,7 @@ class ControladorMesa():
     
     def pega_mesa_por_numero(self, numero: int):
         for mesa in self.__mesas:
-            if(mesa.numero == int(numero)):
+            if(int(mesa.numero) == int(numero)):
                 return mesa
         return None
 
@@ -47,12 +47,13 @@ class ControladorMesa():
             self.__tela_mesa.mostra_mensagem(e)
 
     def lista_mesas(self):
-        self.__tela_mesa.mostra_mensagem("------ MESAS ------")
         if len(self.__mesas) == 0:
             self.__tela_mesa.mostra_mensagem("ATENÇÃO: Lista de mesas vazia")
+        dados_mesas = []
         for mesa in self.__mesas:
-            self.__tela_mesa.mostra_dados_mesa({"numero": mesa.numero, "capacidade": mesa.capacidade})
-    
+            dados_mesas.append({"numero": mesa.numero, "capacidade": mesa.capacidade})
+        self.__tela_mesa.mostra_dados_mesa(dados_mesas)
+
     def lista_mesas_disponiveis(self):
         self.__tela_mesa.mostra_mensagem("------MESAS------")
         if len(self.__mesas) == 0:

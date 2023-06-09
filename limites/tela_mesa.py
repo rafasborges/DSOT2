@@ -88,8 +88,8 @@ class TelaMesa():
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
             [sg.Radio('Incluir Mesa', "RD1", key='1')],
             [sg.Radio('Alterar Mesa', "RD1", key='2')],
-            [sg.Radio('Listar Mesa', "RD1", key='3')],
-            [sg.Radio('Excluir Mesa', "RD1", key='4')],
+            [sg.Radio('Excluir Mesa', "RD1", key='3')],
+            [sg.Radio('Listar Mesa', "RD1", key='4')],
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
@@ -117,12 +117,11 @@ class TelaMesa():
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_dados_mesa(self, dados_mesa):
         string_todas_mesas = ""
-        print(dados_mesa)
         for mesa in dados_mesa:
-            print(dados_mesa)
-            string_todas_mesas = string_todas_mesas + "NÚMERO DA MESA: " + dados_mesa["numero"] + '\n'
-            string_todas_mesas = string_todas_mesas + "CAPACIDADE DA MESA: " + dados_mesa["capacidade"] + '\n'
-
+            string_todas_mesas = string_todas_mesas + "NÚMERO DA MESA: " + str(mesa["numero"]) + '\n'
+            string_todas_mesas = string_todas_mesas + "CAPACIDADE DA MESA: " + str(mesa["capacidade"]) + '\n'
+            print('\n')
+            
         sg.Popup('-------- LISTA DE MESAS ----------', string_todas_mesas)
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
@@ -131,13 +130,13 @@ class TelaMesa():
         layout = [
             [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
             [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='num_mesa')],
+            [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
         self.__window = sg.Window('Seleciona mesa').Layout(layout)
 
         button, values = self.open()
-        num_mesa = values['num_mesa']
+        num_mesa = values['numero']
         self.close()
         return num_mesa
 
