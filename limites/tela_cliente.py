@@ -82,7 +82,7 @@ class TelaCliente():
 
     def init_opcoes(self):
       # sg.theme_previewer()
-      sg.ChangeLookAndFeel('DarkTeal4')
+      sg.ChangeLookAndFeel('TealMono')
       layout = [
         [sg.Text('-------- CLIENTES ----------', font=("Helvica", 25))],
         [sg.Text('Escolha sua opção', font=("Helvica", 15))],
@@ -93,49 +93,53 @@ class TelaCliente():
         [sg.Radio('Retornar', "RD1", key='0')],
         [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
       ]
-      self.__window = sg.Window('Sistema de livros').Layout(layout)
+      self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
-    def pega_dados_amigo(self):
-      sg.ChangeLookAndFeel('DarkTeal4')
+    def pega_dados_cliente(self):
+      sg.ChangeLookAndFeel('TealMono')
       layout = [
-        [sg.Text('-------- DADOS AMIGO ----------', font=("Helvica", 25))],
+        [sg.Text('-------- DADOS CLIENTE ----------', font=("Helvica", 25))],
         [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
-        [sg.Text('Telefone:', size=(15, 1)), sg.InputText('', key='telefone')],
         [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-        [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        [sg.Text('Número de convidados:', size=(15, 1)), sg.InputText('', key='num_convidados')],
+        [sg.Text('Idade:', size=(15, 1)), sg.InputText('', key='idade')],
+        [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
       ]
-      self.__window = sg.Window('Sistema de livros').Layout(layout)
+      self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
       button, values = self.open()
       nome = values['nome']
-      telefone = values['telefone']
       cpf = values['cpf']
+      num_convidados = values['num_convidados']
+      idade = values['idade']
+
 
       self.close()
-      return {"nome": nome, "telefone": telefone, "cpf": cpf}
+      return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    def mostra_amigo(self, dados_amigo):
-      string_todos_amigos = ""
+    def mostra_cliente(self, dados_cliente):
+      string_todos_clientes = ""
       for dado in dados_amigo:
-        string_todos_amigos = string_todos_amigos + "NOME DO AMIGO: " + dado["nome"] + '\n'
-        string_todos_amigos = string_todos_amigos + "FONE DO AMIGO: " + str(dado["telefone"]) + '\n'
-        string_todos_amigos = string_todos_amigos + "CPF DO AMIGO: " + str(dado["cpf"]) + '\n\n'
+        string_todos_clientes = string_todos_clientes + "NOME DO CLIENTE: " + dado["nome"] + '\n'
+        string_todos_clientes = string_todos_clientes + "CPF DO CLIENTE: " + str(dado["cpf"]) + '\n'
+        string_todos_clientes = string_todos_clientes + "NUM. DE CONVIDADOS: " + str(dado["num_convidados"]) + '\n\n'
+        string_todos_clientes = string_todos_clientes + "IDADE: " + str(dado["idade"]) + '\n\n'
 
-      sg.Popup('-------- LISTA DE AMIGOS ----------', string_todos_amigos)
+      sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes)
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    def seleciona_amigo(self):
+    def seleciona_cliente(self):
       sg.ChangeLookAndFeel('DarkTeal4')
       layout = [
-        [sg.Text('-------- SELECIONAR AMIGO ----------', font=("Helvica", 25))],
-        [sg.Text('Digite o CPF do amigo que deseja selecionar:', font=("Helvica", 15))],
+        [sg.Text('-------- SELECIONAR CLIENTE ----------', font=("Helvica", 25))],
+        [sg.Text('Digite o CPF do cliente que deseja selecionar:', font=("Helvica", 15))],
         [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-        [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
       ]
-      self.__window = sg.Window('Seleciona amigo').Layout(layout)
+      self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
       button, values = self.open()
       cpf = values['cpf']
