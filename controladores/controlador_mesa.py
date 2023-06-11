@@ -85,7 +85,7 @@ class ControladorMesa():
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.incluir_mesa, 2: self.alterar_mesa, 3: self.excluir_mesa, 4: self.lista_mesas, 5: self.retornar}
+        lista_opcoes = {1: self.incluir_mesa, 2: self.alterar_mesa, 3: self.excluir_mesa, 4: self.lista_mesas, 0: self.retornar}
         continua = True
         while continua:
             lista_opcoes[self.__tela_mesa.tela_opcoes()]()

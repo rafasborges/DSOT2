@@ -56,7 +56,7 @@ class TelaMesa(Tela):
 import PySimpleGUI as sg
 
 
-class TelaMesa():
+class TelaMesa(Tela):
     def __init__(self):
         self.__window = None
         self.init_opcoes()

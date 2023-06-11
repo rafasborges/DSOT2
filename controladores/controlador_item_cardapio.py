@@ -79,7 +79,7 @@ class ControladorItemCardapio():
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.incluir_item, 2: self.alterar_item, 3: self.excluir_item, 4: self.lista_itens_cardapio, 5: self.retornar}
+        lista_opcoes = {1: self.incluir_item, 2: self.alterar_item, 3: self.excluir_item, 4: self.lista_itens_cardapio, 0: self.retornar}
 
         continua = True
         while continua:
