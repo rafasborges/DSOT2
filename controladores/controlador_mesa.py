@@ -1,9 +1,8 @@
-rom
-entidades.mesa
-import Mesa
+from entidades.mesa import Mesa
 from exceptions.mesa_nao_existente_exception import MesaNaoExistenteException
 from limites.tela_mesa import TelaMesa
 from exceptions.mesa_repetida_exception import MesaRepetidaException
+
 
 
 class ControladorMesa():
