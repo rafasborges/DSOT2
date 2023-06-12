@@ -122,6 +122,7 @@ class TelaMesa(Tela):
                 return {"numero": numero, "capacidade": capacidade}
             except ValueError:
                     sg.Popup("Dados incorretos, utilize apenas números positivos para número e capacidade!", title = "ERRO")
+                    self.close()
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_dados_mesa(self, dados_mesa):
