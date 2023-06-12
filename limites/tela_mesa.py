@@ -99,20 +99,29 @@ class TelaMesa(Tela):
     # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_mesa(self):
         sg.ChangeLookAndFeel('TealMono')
-        layout = [
-            [sg.Text('-------- DADOS MESA ----------', font=("Helvica", 25))],
-            [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
-            [sg.Text('Capacidade:', size=(15, 1)), sg.InputText('', key='capacidade')],
-            [sg.Cancel('Cancelar'), sg.Button('Confirmar')]
-        ]
-        self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+        while True:
+            try:
+                layout = [
+                    [sg.Text('-------- DADOS MESA ----------', font=("Helvica", 25))],
+                    [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
+                    [sg.Text('Capacidade:', size=(15, 1)), sg.InputText('', key='capacidade')],
+                    [sg.Cancel('Cancelar'), sg.Button('Confirmar')]
+                ]
+                self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-        button, values = self.open()
-        numero = values['numero']
-        capacidade = values['capacidade']
+            
+                button, values = self.open()
+                numero = int(values['numero'])
+                capacidade = int(values['capacidade'])
+                if (not isinstance(numero, int) or
+                        not isinstance(capacidade, int) or
+                        numero < 0 or capacidade < 0):
+                        raise ValueError
 
-        self.close()
-        return {"numero": numero, "capacidade": capacidade}
+                self.close()
+                return {"numero": numero, "capacidade": capacidade}
+            except ValueError:
+                    sg.Popup("Dados incorretos, utilize apenas números positivos para número e capacidade!", title = "ERRO")
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_dados_mesa(self, dados_mesa):
