@@ -4,12 +4,13 @@ from limites.tela_mesa import TelaMesa
 from exceptions.mesa_repetida_exception import MesaRepetidaException
 
 
+
 class ControladorMesa():
     def __init__(self, controlador_sistema):
         self.__mesas = []
         self.__tela_mesa = TelaMesa()
         self.__controlador_sistema = controlador_sistema
-    
+
     def pega_mesa_por_numero(self, numero: int):
         for mesa in self.__mesas:
             if(int(mesa.numero) == int(numero)):
@@ -36,7 +37,7 @@ class ControladorMesa():
         mesa = self.pega_mesa_por_numero(numero_mesa)
 
         try:
-            if(mesa is not None):
+            if (mesa is not None):
                 novos_dados_mesa = self.__tela_mesa.pega_dados_mesa()
                 mesa.numero = novos_dados_mesa["numero"]
                 mesa.capacidade = novos_dados_mesa["capacidade"]
@@ -73,14 +74,14 @@ class ControladorMesa():
         numero_mesa = self.__tela_mesa.seleciona_mesa()
         mesa = self.pega_mesa_por_numero(numero_mesa)
         try:
-            if(mesa is not None):
+            if (mesa is not None):
                 self.__mesas.remove(mesa)
                 self.lista_mesas()
             else:
                 raise MesaNaoExistenteException(numero_mesa)
         except MesaNaoExistenteException as e:
             self.__tela_mesa.mostra_mensagem(e)
-        
+
     def retornar(self):
         self.__controlador_sistema.abre_tela()
 
