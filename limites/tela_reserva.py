@@ -1,5 +1,6 @@
-from limites.tela import Tela
 
+from limites.tela import Tela
+'''
 
 class TelaReserva(Tela):
 
@@ -58,4 +59,104 @@ class TelaReserva(Tela):
   def mostra_ganho_reserva(self, id_reserva, total):
     print("Valor total da reserva {}: {}".format(id_reserva, total))
 
- 
+'''
+
+
+import PySimpleGUI as sg
+
+
+class TelaReserva(Tela):
+    def __init__(self):
+        self.__window = None
+        self.init_opcoes()
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    def tela_opcoes(self):
+        self.init_opcoes()
+        button, values = self.open()
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        if values['3']:
+            opcao = 3
+        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
+        # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
+        return opcao
+
+    def init_opcoes(self):
+        # sg.theme_previewer()
+        sg.ChangeLookAndFeel('TealMono')
+        layout = [
+            [sg.Text('-------- RESERVAS ----------', font=("Helvica", 25))],
+            [sg.Text('Escolha sua opção', font=("Helvica", 15))],
+            [sg.Radio('Incluir Reserva', "RD1", key='1')],
+            [sg.Radio('Excluir Reserva', "RD1", key='2')],
+            [sg.Radio('Listar Reserva', "RD1", key='3')],
+            [sg.Radio('Retornar', "RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
+    def pega_dados_reserva(self):
+        sg.ChangeLookAndFeel('TealMono')
+        layout = [
+            [sg.Text('-------- DADOS RESERVA ----------', font=("Helvica", 25))],
+            [sg.Text('Id da reserva:', size=(15, 1)), sg.InputText('', key='id')],
+            [sg.Text('Número da Mesa:', size=(15, 1)), sg.InputText('', key='mesa_num')],
+            [sg.Text('CPF do cliente:', size=(15, 1)), sg.InputText('', key='cliente_cpf')],
+            [sg.Text('Nome do funcionário:', size=(15, 1)), sg.InputText('', key='funcionario_nome')],
+            [sg.Cancel('Cancelar'), sg.Button('Confirmar')]
+        ]
+        self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+
+        button, values = self.open()
+        id = values['id']
+        mesa_num = values['mesa_num']
+        cliente_cpf = values['cliente_cpf']
+        funcionario_nome = values['funcionario_nome']
+
+        self.close()
+        return {"id": id, "mesa_num": mesa_num, "cliente_cpf": cliente_cpf, "funcionario_nome": funcionario_nome.upper()}
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    def mostra_reserva(self, dados_reserva):
+        string_todas_reservas = ""
+        for reserva in dados_reserva:
+            string_todas_reservas = string_todas_reservas + "ID DA RESERVA: " + str(reserva["id_reserva"]) + '\n'
+            string_todas_reservas = string_todas_reservas + "NÚMERO DA MESA: " + str(reserva["num_mesa"]) + '\n'
+            string_todas_reservas = string_todas_reservas + "NOME DO CLIENTE: " + str(reserva["nome_cliente"]) + '\n'
+            string_todas_reservas = string_todas_reservas + "NOME DO FUNCIONÁRIO: " + str(reserva["nome_funcionario"]) + '\n\n'
+
+        sg.Popup('-------- LISTA DE RESERVAS ----------', string_todas_reservas)
+
+    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+    def seleciona_reserva(self):
+        sg.ChangeLookAndFeel('TealMono')
+        layout = [
+            [sg.Text('-------- SELECIONAR RESERVA ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o id da reserva que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('Id:', size=(15, 1)), sg.InputText('', key='id')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Seleciona reserva').Layout(layout)
+
+        button, values = self.open()
+        id_reserva = values['id']
+        self.close()
+        return id_reserva
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
+
+    def close(self):
+        self.__window.Close()
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values

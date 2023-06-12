@@ -65,15 +65,15 @@ class ControladorReserva():
 
 
   def lista_reservas(self):
-    self.__tela_reserva.mostra_mensagem("------ RESERVAS ------")
     if len(self.__reservas) == 0:
        self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
+    dados_reservas = []
     for e in self.__reservas:
-      self.__tela_reserva.mostra_reserva({"nome_cliente": e.cliente.nome,
-                                                "nome_funcionario": e.funcionario.nome,
-                                                "num_mesa": e.mesa.numero,
-                                                "id_reserva": e.id,
-                                                })
+      dados_reservas.append({"nome_cliente": e.cliente.nome,
+                              "nome_funcionario": e.funcionario.nome,
+                              "num_mesa": e.mesa.numero,
+                              "id_reserva": e.id})
+    self.__tela_reserva.mostra_reserva(dados_reservas)
 
   def excluir_reserva(self):
     self.lista_reservas()
@@ -105,7 +105,7 @@ class ControladorReserva():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_reserva, 2: self.lista_reservas, 3: self.excluir_reserva, 4: self.calcular_ganho_reserva, 5: self.retornar}
+    lista_opcoes = {1: self.incluir_reserva, 2: self.lista_reservas, 3: self.excluir_reserva, 4: self.calcular_ganho_reserva, 0: self.retornar}
 
     continua = True
     while continua:

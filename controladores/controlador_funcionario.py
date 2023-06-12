@@ -98,7 +98,7 @@ class ControladorFuncionario():
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.incluir_funcionario, 2: self.alterar_funcionario, 3: self.excluir_funcionario, 4: self.lista_funcionarios, 5:self.calcular_salario, 6:self.retornar}
+        lista_opcoes = {1: self.incluir_funcionario, 2: self.alterar_funcionario, 3: self.excluir_funcionario, 4: self.lista_funcionarios, 5:self.calcular_salario, 0:self.retornar}
 
         continua = True
         while continua:

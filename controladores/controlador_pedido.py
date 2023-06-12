@@ -54,9 +54,9 @@ class ControladorPedido():
     
 
   def lista_pedidos(self):
-    self.__tela_pedido.mostra_mensagem("------ PEDIDOS ------")
     if len(self.__pedidos) == 0:
        self.__tela_pedido.mostra_mensagem("ATENÇÃO: Lista de pedidos vazia")
+    dados_pedidos = []
     for pedido in self.__pedidos:
         itens_pedido = ""
         for item in pedido.itens:
@@ -64,8 +64,11 @@ class ControladorPedido():
               itens_pedido += "{} - {} - {} - R$ {}\n".format(item.codigo_item, item.nome, item.descricao, item.preco)
             else:
               self.__tela_pedido.mostra_mensagem("Erro! Item é nulo!")
-        self.__tela_pedido.mostra_dados_pedido({"codigo": pedido.codigo, "id_reserva": pedido.reserva.id, "itens": itens_pedido})
-    
+
+        dados_pedidos.append({"codigo": pedido.codigo, "id_reserva": pedido.reserva.id, "itens": itens_pedido})
+    self.__tela_pedido.mostra_dados_pedido(dados_pedidos)
+
+
   def excluir_pedido(self):
     self.lista_pedidos()
     codigo = self.__tela_pedido.seleciona_pedido()
@@ -92,7 +95,7 @@ class ControladorPedido():
     self.__controlador_sistema.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.incluir_pedido, 2: self.lista_pedidos, 3: self.excluir_pedido, 4: self.retornar}
+    lista_opcoes = {1: self.incluir_pedido, 2: self.lista_pedidos, 3: self.excluir_pedido, 0: self.retornar}
 
     continua = True
     while continua:
