@@ -73,7 +73,7 @@ class TelaCliente():
         string_todos_clientes = string_todos_clientes + "IDADE: " + str(dados_cliente["idade"]) + '\n\n'
 
       sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes)
-
+      self.__window = sg.Window('Lista de Clientes').Layout(layout)
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_cliente(self):
       sg.ChangeLookAndFeel('TealMono')
