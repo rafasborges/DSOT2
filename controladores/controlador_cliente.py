@@ -69,7 +69,7 @@ class ControladorCliente():
 
 
     def lista_clientes(self):
-        self.__tela_cliente.mostra_mensagem("----- CLIENTES ------")
+        #self.__tela_cliente.mostra_mensagem("----- CLIENTES ------")
         if len(self.__clientes) == 0:
                 self.__tela_cliente.mostra_mensagem("ATENÇÃO: Lista de clientes vazia")
         for cliente in self.__clientes:
