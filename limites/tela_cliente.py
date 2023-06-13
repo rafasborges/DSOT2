@@ -45,25 +45,25 @@ class TelaCliente():
         sg.ChangeLookAndFeel('TealMono')
         while True:
             try:
-              layout = [
-                [sg.Text('-------- DADOS CLIENTE ----------', font=("Helvica", 25))],
-                [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
-                [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-                [sg.Text('Número de convidados:', size=(15, 1)), sg.InputText('', key='num_convidados')],
-                [sg.Text('Idade:', size=(15, 1)), sg.InputText('', key='idade')],
-                [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
-              ]
-              self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+                layout = [
+                    [sg.Text('-------- DADOS CLIENTE ----------', font=("Helvica", 25))],
+                    [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+                    [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
+                    [sg.Text('Número de convidados:', size=(15, 1)), sg.InputText('', key='num_convidados')],
+                    [sg.Text('Idade:', size=(15, 1)), sg.InputText('', key='idade')],
+                    [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+                ]
+                self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-              button, values = self.open()
-              nome = values['nome']
-              cpf = values['cpf']
-              num_convidados = values['num_convidados']
-              idade = values['idade']
+                button, values = self.open()
+                nome = values['nome']
+                cpf = values['cpf']
+                num_convidados = values['num_convidados']
+                idade = values['idade']
 
 
-            self.close()
-            return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
+                self.close()
+                return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_cliente(self, dados_cliente):
