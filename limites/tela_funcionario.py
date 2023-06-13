@@ -98,7 +98,7 @@ class TelaFuncionario():
     def pega_dados_funcionario(self):
       sg.ChangeLookAndFeel('TealMono')
       layout = [
-        [sg.Text('-------- DADOS Funcionário ----------', font=("Helvica", 25))],
+        [sg.Text('-------- DADOS FUNCIONARIOS ----------', font=("Helvica", 25))],
         [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
         [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
         [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
