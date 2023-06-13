@@ -141,25 +141,26 @@ class TelaMesa(Tela):
     def seleciona_mesa(self):
         sg.ChangeLookAndFeel('TealMono')
 
-        try:
-            layout = [
-                [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
-                [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
-                [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
-                [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
-            ]
-            self.__window = sg.Window('Seleciona mesa').Layout(layout)
+        while True:
+            try:
+                layout = [
+                    [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
+                    [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
+                    [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
+                    [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+                ]
+                self.__window = sg.Window('Seleciona mesa').Layout(layout)
 
-            button, values = self.open()
-            num_mesa = values['numero']
-            if not isinstance(num_mesa, int):
-                raise ValueError
-            self.close()
-            return num_mesa
+                button, values = self.open()
+                num_mesa = int(values['numero'])
+                if not isinstance(num_mesa, int):
+                    raise ValueError
+                self.close()
+                return num_mesa
             
-        except ValueError:
-            sg.Popup("Insira um valor válido! O número da mesa deve ser um valor inteiro!", title = "ERRO")
-            self.close()
+            except ValueError:
+                sg.Popup("Insira um valor válido! O número da mesa deve ser um valor inteiro!", title = "ERRO")
+                self.close()
 
     def mostra_mensagem(self, msg):
         sg.popup("", msg)
