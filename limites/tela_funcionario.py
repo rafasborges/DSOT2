@@ -54,7 +54,7 @@ class TelaFuncionario(Tela):
 """
 import PySimpleGUI as sg
 
-class TelaFuncionario():
+class TelaFuncionario(Tela):
     def __init__(self):
         self.__window = None
         self.init_opcoes()
@@ -97,24 +97,31 @@ class TelaFuncionario():
     # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_funcionario(self):
       sg.ChangeLookAndFeel('TealMono')
-      layout = [
-        [sg.Text('-------- DADOS FUNCIONARIOS ----------', font=("Helvica", 25))],
-        [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
-        [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-        [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
-        [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
-      ]
-      self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+      while True:
+        try:
+          layout = [
+            [sg.Text('-------- DADOS FUNCIONARIOS ----------', font=("Helvica", 25))],
+            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+            [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
+            [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
+            [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+          ]
+          self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-      button, values = self.open()
-      nome = values['nome']
-      cpf = values['cpf']
-      salario = values['salario']
-
-
-
-      self.close()
-      return {"nome": nome, "cpf": cpf, "salario": salario}
+          button, values = self.open()
+          nome = str(values['nome'])
+          cpf = str(values['cpf'])
+          salario = float(values['salario'])
+          if ((self.checa_valor(nome) == True) or
+                    (not isinstance(salario, (int, float)) or
+                    len(cpf) != 11) or
+                    salario < 0):
+                    raise ValueError
+          self.close()
+          return {"nome": nome, "cpf": cpf, "salario": salario}
+        except ValueError:
+          sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números decimais positivos para o salário!", title = "ERRO")
+        self.close()
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_funcionario(self, dados_cliente):
