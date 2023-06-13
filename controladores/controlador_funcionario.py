@@ -54,7 +54,7 @@ class ControladorFuncionario():
 
 
     def lista_funcionarios(self):
-        self.__tela_funcionario.mostra_mensagem("----- FUNCIONÁRIOS ------")
+        #self.__tela_funcionario.mostra_mensagem("----- FUNCIONÁRIOS ------")
         if len(self.__funcionarios) == 0:
                 self.__tela_funcionario.mostra_mensagem("ATENÇÃO: Lista de funcionários vazia")
         for funcionario in self.__funcionarios:
