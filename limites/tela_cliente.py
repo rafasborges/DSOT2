@@ -60,45 +60,61 @@ class TelaCliente():
                 cpf = values['cpf']
                 num_convidados = values['num_convidados']
                 idade = values['idade']
+                if (not isinstance(idade, int) or
+                        not isinstance(num_convidados, int) or
+                        num_convidados < 0 or idade < 0):
+                        raise ValueError
 
 
                 self.close()
                 return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
+            except ValueError:
+                    sg.Popup("Dados incorretos, utilize apenas números positivos para idade e núm con!", title = "ERRO")
+                    self.close()
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_cliente(self, dados_cliente):
-      string_todos_clientes = ""
-      for dado in dados_cliente:
-        string_todos_clientes = string_todos_clientes + "NOME DO CLIENTE: " + dados_cliente["nome"] + '\n'
-        string_todos_clientes = string_todos_clientes + "CPF DO CLIENTE: " + str(dados_cliente["cpf"]) + '\n'
-        string_todos_clientes = string_todos_clientes + "NUM. DE CONVIDADOS: " + str(dados_cliente["num_convidados"]) + '\n'
-        string_todos_clientes = string_todos_clientes + "IDADE: " + str(dados_cliente["idade"]) + '\n\n'
+        sg.ChangeLookAndFeel('TealMono')
+        try:
+            string_todos_clientes = ""
+            for dado in dados_cliente:
+                string_todos_clientes = string_todos_clientes + "NOME DO CLIENTE: " + dados_cliente["nome"] + '\n'
+                string_todos_clientes = string_todos_clientes + "CPF DO CLIENTE: " + str(dados_cliente["cpf"]) + '\n'
+                string_todos_clientes = string_todos_clientes + "NUM. DE CONVIDADOS: " + str(dados_cliente["num_convidados"]) + '\n'
+                string_todos_clientes = string_todos_clientes + "IDADE: " + str(dados_cliente["idade"]) + '\n\n'
 
-      sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes)
-      self.__window = sg.Window('Lista de Clientes').Layout(layout)
+            sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes)
+
+        except KeyError as e:
+            sg.Popup("Erro ao exibir dados da mesa: ", str(e))
+            self.__window = sg.Window('Lista de Clientes').Layout(layout)
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_cliente(self):
-      sg.ChangeLookAndFeel('TealMono')
-      layout = [
-        [sg.Text('-------- SELECIONAR CLIENTE ----------', font=("Helvica", 25))],
-        [sg.Text('Digite o CPF do cliente que deseja selecionar:', font=("Helvica", 15))],
-        [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-        [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
-      ]
-      self.__window = sg.Window('Seleciona cliente').Layout(layout)
+        sg.ChangeLookAndFeel('TealMono')
+        while True:
+            try:
+                layout = [
+                    [sg.Text('-------- SELECIONAR CLIENTE ----------', font=("Helvica", 25))],
+                    [sg.Text('Digite o CPF do cliente que deseja selecionar:', font=("Helvica", 15))],
+                    [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
+                    [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+                ]
+                self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
-      button, values = self.open()
-      cpf = values['cpf']
-      self.close()
-      return cpf
+                button, values = self.open()
+                cpf = values['cpf']
+                if not isinstance(cpf, int):
+                    raise ValueError
+                self.close()
+                return cpf
 
     def mostra_mensagem(self, msg):
-      sg.popup("", msg)
+        sg.popup("", msg)
 
     def close(self):
-      self.__window.Close()
+        self.__window.Close()
 
     def open(self):
-      button, values = self.__window.Read()
-      return button, values
+        button, values = self.__window.Read()
+        return button, values
 
