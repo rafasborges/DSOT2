@@ -126,28 +126,40 @@ class TelaMesa(Tela):
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_dados_mesa(self, dados_mesa):
-        string_todas_mesas = ""
-        for mesa in dados_mesa:
-            string_todas_mesas = string_todas_mesas + "NÚMERO DA MESA: " + str(mesa["numero"]) + '\n'
-            string_todas_mesas = string_todas_mesas + "CAPACIDADE DA MESA: " + str(mesa["capacidade"]) + '\n\n'
+        try:
+            string_todas_mesas = ""
+            for mesa in dados_mesa:
+                string_todas_mesas = string_todas_mesas + "NÚMERO DA MESA: " + str(mesa["numero"]) + '\n'
+                string_todas_mesas = string_todas_mesas + "CAPACIDADE DA MESA: " + str(mesa["capacidade"]) + '\n\n'
 
-        sg.Popup('-------- LISTA DE MESAS ----------', string_todas_mesas)
+            sg.Popup('-------- LISTA DE MESAS ----------', string_todas_mesas)
+        except KeyError as e:
+            sg.Popup("Erro ao exibir dados da mesa: ", str(e))
+
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_mesa(self):
         sg.ChangeLookAndFeel('TealMono')
-        layout = [
-            [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
-            [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
-            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
-        ]
-        self.__window = sg.Window('Seleciona mesa').Layout(layout)
 
-        button, values = self.open()
-        num_mesa = values['numero']
-        self.close()
-        return num_mesa
+        try:
+            layout = [
+                [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
+                [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
+                [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
+                [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+            ]
+            self.__window = sg.Window('Seleciona mesa').Layout(layout)
+
+            button, values = self.open()
+            num_mesa = values['numero']
+            if not isinstance(num_mesa, int):
+                raise ValueError
+            self.close()
+            return num_mesa
+            
+        except ValueError:
+            sg.Popup("Insira um valor válido! O número da mesa deve ser um valor inteiro!", title = "ERRO")
+            self.close()
 
     def mostra_mensagem(self, msg):
         sg.popup("", msg)
