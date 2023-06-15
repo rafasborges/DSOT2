@@ -68,12 +68,15 @@ class TelaSistema(Tela):
         layout = [
             [sg.Text('Bem vindo ao Sistema de Restaurante!', font=("Helvica",25))],
             [sg.Text('Escolha sua opção', font=("Helvica",15))],
+            #[sg.Text('RESTAURANTE', font=("Helvica",25))],
             [sg.Radio('Mesas',"RD1", key='1')],
             [sg.Radio('Itens do cardápio',"RD1", key='2')],
             [sg.Radio('Funcionários',"RD1", key='3')],
+            #[sg.Text('SISTEMA', font=("Helvica",25))],
             [sg.Radio('Clientes',"RD1", key='4')],
             [sg.Radio('Reservas',"RD1", key='5')],
             [sg.Radio('Pedidos',"RD1", key='6')],
+            [sg.Text('RELATÓRIOS', font=("Helvica",25))],
             [sg.Radio('Finalizar sistema',"RD1", key='0')],
             [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
         ]

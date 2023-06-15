@@ -54,11 +54,12 @@ class ControladorFuncionario():
 
 
     def lista_funcionarios(self):
-        #self.__tela_funcionario.mostra_mensagem("----- FUNCIONÁRIOS ------")
         if len(self.__funcionarios) == 0:
                 self.__tela_funcionario.mostra_mensagem("ATENÇÃO: Lista de funcionários vazia")
+        dados_funcionarios = []
         for funcionario in self.__funcionarios:
-            self.__tela_funcionario.mostra_funcionario({"nome": funcionario.nome, "cpf": funcionario.cpf, "salario": funcionario.salario})
+            dados_funcionarios.append({"nome": funcionario.nome, "cpf": funcionario.cpf, "salario": funcionario.salario})
+        self.__tela_funcionario.mostra_funcionario(dados_funcionarios)
 
     def excluir_funcionario(self):
         self.lista_funcionarios()

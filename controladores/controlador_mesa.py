@@ -56,12 +56,13 @@ class ControladorMesa():
         self.__tela_mesa.mostra_dados_mesa(dados_mesas)
 
     def lista_mesas_disponiveis(self):
-        self.__tela_mesa.mostra_mensagem("------MESAS------")
         if len(self.__mesas) == 0:
             self.__tela_mesa.mostra_mensagem("ATENÇÃO: Lista de mesas vazia")
+        dados_mesas_disp = []
         for mesa in self.__mesas:
             if mesa.status == False:
-                self.__tela_mesa.mostra_dados_mesa({"numero": mesa.numero, "capacidade": mesa.capacidade})
+                dados_mesas_disp.append({"numero": mesa.numero, "capacidade": mesa.capacidade})
+        self.__tela_mesa.mostra_dados_mesa(dados_mesas_disp)
 
     def ha_mesas_disponiveis(self):
         for mesa in self.__mesas:

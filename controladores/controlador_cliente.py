@@ -69,12 +69,13 @@ class ControladorCliente():
 
 
     def lista_clientes(self):
-        #self.__tela_cliente.mostra_mensagem("----- CLIENTES ------")
         if len(self.__clientes) == 0:
                 self.__tela_cliente.mostra_mensagem("ATENÇÃO: Lista de clientes vazia")
+        dados_clientes = []
         for cliente in self.__clientes:
-            self.__tela_cliente.mostra_cliente({"nome": cliente.nome, "cpf": cliente.cpf, "idade": cliente.idade, "num_convidados": cliente.num_convidados})
-
+            dados_clientes.append({"nome": cliente.nome, "cpf": cliente.cpf, "idade": cliente.idade, "num_convidados": cliente.num_convidados})
+        self.__tela_cliente.mostra_cliente(dados_clientes)
+        
     def excluir_cliente(self):
         self.lista_clientes()
         cpf_cliente = self.__tela_cliente.seleciona_cliente()

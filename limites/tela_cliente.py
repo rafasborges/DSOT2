@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
+from limites.tela import Tela
 
-class TelaCliente():
+class TelaCliente(Tela):
     def __init__(self):
         self.__window = None
         self.init_opcoes()
@@ -56,20 +57,16 @@ class TelaCliente():
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
                 button, values = self.open()
-                nome = values['nome']
-                cpf = values['cpf']
-                num_convidados = values['num_convidados']
-                idade = values['idade']
-                if (not isinstance(idade, int) or
-                        not isinstance(num_convidados, int) or
-                        num_convidados < 0 or idade < 0):
-                        raise ValueError
-
-
+                nome = str(values['nome'])
+                cpf = str(values['cpf'])
+                num_convidados = int(values['num_convidados'])
+                idade = int(values['idade'])
+                if((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
+                    raise ValueError
                 self.close()
                 return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
             except ValueError:
-                    sg.Popup("Dados incorretos, utilize apenas números positivos para idade e núm con!", title = "ERRO")
+                    sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números inteiros para a idade e número de convidados!", title = "ERRO")
                     self.close()
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
@@ -78,16 +75,17 @@ class TelaCliente():
         try:
             string_todos_clientes = ""
             for dado in dados_cliente:
-                string_todos_clientes = string_todos_clientes + "NOME DO CLIENTE: " + dados_cliente["nome"] + '\n'
-                string_todos_clientes = string_todos_clientes + "CPF DO CLIENTE: " + str(dados_cliente["cpf"]) + '\n'
-                string_todos_clientes = string_todos_clientes + "NUM. DE CONVIDADOS: " + str(dados_cliente["num_convidados"]) + '\n'
-                string_todos_clientes = string_todos_clientes + "IDADE: " + str(dados_cliente["idade"]) + '\n\n'
+                string_todos_clientes = string_todos_clientes + "NOME DO CLIENTE: " + str(dado["nome"]) + '\n'
+                string_todos_clientes = string_todos_clientes + "CPF DO CLIENTE: " + str(dado["cpf"]) + '\n'
+                string_todos_clientes = string_todos_clientes + "NUM. DE CONVIDADOS: " + str(dado["num_convidados"]) + '\n'
+                string_todos_clientes = string_todos_clientes + "IDADE: " + str(dado["idade"]) + '\n\n'
 
             sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes)
 
         except KeyError as e:
-            sg.Popup("Erro ao exibir dados da mesa: ", str(e))
+            sg.Popup("Erro ao exibir dados do cliente: ", str(e))
             self.__window = sg.Window('Lista de Clientes').Layout(layout)
+
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_cliente(self):
         sg.ChangeLookAndFeel('TealMono')
@@ -102,11 +100,14 @@ class TelaCliente():
                 self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
                 button, values = self.open()
-                cpf = values['cpf']
-                if not isinstance(cpf, int):
+                cpf = str(values['cpf'])
+                if not isinstance(cpf, str):
                     raise ValueError
                 self.close()
                 return cpf
+            except ValueError:
+                sg.Popup("Insira um valor válido!", title = "ERRO")
+                self.close()
 
     def mostra_mensagem(self, msg):
         sg.popup("", msg)

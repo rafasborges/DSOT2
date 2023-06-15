@@ -80,6 +80,8 @@ class TelaReserva(Tela):
             opcao = 2
         if values['3']:
             opcao = 3
+        if values['4']:
+            opcao = 4
         # cobre os casos de Retornar, fechar janela, ou clicar cancelar
         # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
         if values['0'] or button in (None, 'Cancelar'):
@@ -94,8 +96,9 @@ class TelaReserva(Tela):
             [sg.Text('-------- RESERVAS ----------', font=("Helvica", 25))],
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
             [sg.Radio('Incluir Reserva', "RD1", key='1')],
-            [sg.Radio('Excluir Reserva', "RD1", key='2')],
-            [sg.Radio('Listar Reserva', "RD1", key='3')],
+            [sg.Radio('Listar Reserva', "RD1", key='2')],
+            [sg.Radio('Excluir Reserva', "RD1", key='3')],
+            [sg.Radio('Calcular valor total de uma Reserva', "RD1", key='4')],
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
@@ -105,27 +108,39 @@ class TelaReserva(Tela):
     # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_reserva(self):
         sg.ChangeLookAndFeel('TealMono')
-        layout = [
-            [sg.Text('-------- DADOS RESERVA ----------', font=("Helvica", 25))],
-            [sg.Text('Id da reserva:', size=(15, 1)), sg.InputText('', key='id')],
-            [sg.Text('Número da Mesa:', size=(15, 1)), sg.InputText('', key='mesa_num')],
-            [sg.Text('CPF do cliente:', size=(15, 1)), sg.InputText('', key='cliente_cpf')],
-            [sg.Text('Nome do funcionário:', size=(15, 1)), sg.InputText('', key='funcionario_nome')],
-            [sg.Cancel('Cancelar'), sg.Button('Confirmar')]
-        ]
-        self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
-
-        button, values = self.open()
-        id = values['id']
-        mesa_num = values['mesa_num']
-        cliente_cpf = values['cliente_cpf']
-        funcionario_nome = values['funcionario_nome']
-
-        self.close()
-        return {"id": id, "mesa_num": mesa_num, "cliente_cpf": cliente_cpf, "funcionario_nome": funcionario_nome.upper()}
-
+        while True:
+          try:
+            layout = [
+                [sg.Text('-------- DADOS RESERVA ----------', font=("Helvica", 25))],
+                [sg.Text('Id da reserva:', size=(15, 1)), sg.InputText('', key='id')],
+                [sg.Text('Número da Mesa:', size=(15, 1)), sg.InputText('', key='mesa_num')],
+                [sg.Text('CPF do cliente:', size=(15, 1)), sg.InputText('', key='cliente_cpf')],
+                [sg.Text('Nome do funcionário:', size=(15, 1)), sg.InputText('', key='funcionario_nome')],
+                [sg.Cancel('Cancelar'), sg.Button('Confirmar')]
+            ]
+            self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+            button, values = self.open()
+            # if button == 'Cancelar':
+            #     self.close()
+            #     break
+            id = int(values['id'])
+            mesa_num = int(values['mesa_num'])
+            cliente_cpf = str(values['cliente_cpf'])
+            funcionario_nome = str(values['funcionario_nome'])
+            if ((not isinstance(id, int)) or 
+                (not isinstance(mesa_num, int)) or
+                (self.checa_valor(funcionario_nome) == True)
+                or len(cliente_cpf) != 11):
+              raise ValueError
+            self.close()
+            return {"id": id, "mesa_num": mesa_num, "cliente_cpf": cliente_cpf, "funcionario_nome": funcionario_nome}
+          except ValueError:
+            sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas inteiros para o id e número da mesa e string para o nome do funcionário!", title = "ERRO")
+            self.close()
+          
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_reserva(self, dados_reserva):
+      try:
         string_todas_reservas = ""
         for reserva in dados_reserva:
             string_todas_reservas = string_todas_reservas + "ID DA RESERVA: " + str(reserva["id_reserva"]) + '\n'
@@ -134,22 +149,36 @@ class TelaReserva(Tela):
             string_todas_reservas = string_todas_reservas + "NOME DO FUNCIONÁRIO: " + str(reserva["nome_funcionario"]) + '\n\n'
 
         sg.Popup('-------- LISTA DE RESERVAS ----------', string_todas_reservas)
+      except KeyError as e:
+        sg.Popup("Erro ao exibir dados da reserva: ", str(e))
+
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_reserva(self):
         sg.ChangeLookAndFeel('TealMono')
-        layout = [
-            [sg.Text('-------- SELECIONAR RESERVA ----------', font=("Helvica", 25))],
-            [sg.Text('Digite o id da reserva que deseja selecionar:', font=("Helvica", 15))],
-            [sg.Text('Id:', size=(15, 1)), sg.InputText('', key='id')],
-            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
-        ]
-        self.__window = sg.Window('Seleciona reserva').Layout(layout)
 
-        button, values = self.open()
-        id_reserva = values['id']
-        self.close()
-        return id_reserva
+        while True:
+          try:
+            layout = [
+                [sg.Text('-------- SELECIONAR RESERVA ----------', font=("Helvica", 25))],
+                [sg.Text('Digite o id da reserva que deseja selecionar:', font=("Helvica", 15))],
+                [sg.Text('Id:', size=(15, 1)), sg.InputText('', key='id')],
+                [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+            ]
+            self.__window = sg.Window('Seleciona reserva').Layout(layout)
+
+            button, values = self.open()
+            id_reserva = int(values['id'])
+            if not isinstance(id_reserva, int):
+              raise ValueError
+            self.close()
+            return id_reserva
+          except ValueError:
+            sg.Popup("Insira um valor válido! O número da reserva deve ser um valor inteiro!", title = "ERRO")
+            self.close()
+    
+    def mostra_ganho_reserva(self, id_reserva, total):
+      sg.Popup("Valor total da reserva " + str(id_reserva) + ": R$ " + str(total))
 
     def mostra_mensagem(self, msg):
         sg.popup("", msg)

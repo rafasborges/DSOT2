@@ -18,6 +18,8 @@ class TelaFuncionario(Tela):
           opcao = 3
         if values['4']:
           opcao = 4
+        if values['5']:
+          opcao = 5
         # cobre os casos de Retornar, fechar janela, ou clicar cancelar
         #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
         if values['0'] or button in (None, 'Cancelar'):
@@ -29,12 +31,13 @@ class TelaFuncionario(Tela):
       # sg.theme_previewer()
       sg.ChangeLookAndFeel('TealMono')
       layout = [
-        [sg.Text('-------- FUNCIONARIOS ----------', font=("Helvica", 25))],
+        [sg.Text('-------- FUNCIONÁRIOS ----------', font=("Helvica", 25))],
         [sg.Text('Escolha sua opção', font=("Helvica", 15))],
         [sg.Radio('Incluir Funcionário', "RD1", key='1')],
         [sg.Radio('Alterar Funcionário', "RD1", key='2')],
-        [sg.Radio('Listar Funcionário', "RD1", key='3')],
-        [sg.Radio('Excluir Funcionário', "RD1", key='4')],
+        [sg.Radio('Excluir Funcionário', "RD1", key='3')],
+        [sg.Radio('Listar Funcionário', "RD1", key='4')],
+        [sg.Radio('Ver salário Funcionário', "RD1", key='5')],
         [sg.Radio('Retornar', "RD1", key='0')],
         [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
       ]
@@ -47,7 +50,7 @@ class TelaFuncionario(Tela):
       while True:
         try:
           layout = [
-            [sg.Text('-------- DADOS FUNCIONARIOS ----------', font=("Helvica", 25))],
+            [sg.Text('-------- DADOS FUNCIONÁRIOS ----------', font=("Helvica", 25))],
             [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
             [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
             [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
@@ -71,34 +74,43 @@ class TelaFuncionario(Tela):
         self.close()
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    def mostra_funcionario(self, dados_cliente):
+    def mostra_funcionario(self, dados_funcionario):
         try:
             string_todos_funcionarios = ""
             for dado in dados_funcionario:
-                string_todos_funcionarios = string_todos_funcionarios + "NOME DO FUNCIONARIO: " + dados_funcionario["nome"] + '\n'
-                string_todos_funcionarios = string_todos_funcionarios + "CPF DO FUNCIONARIO: " + str(dados_funcionario["cpf"]) + '\n'
-                string_todos_funcionarios = string_todos_funcionarios + "SALÁRIO DO FUNCIONARIO: " + str(dados_funcionario["salario"]) + '\n'
+                string_todos_funcionarios = string_todos_funcionarios + "NOME DO FUNCIONARIO: " + str(dado["nome"]) + '\n'
+                string_todos_funcionarios = string_todos_funcionarios + "CPF DO FUNCIONARIO: " + str(dado["cpf"]) + '\n'
+                string_todos_funcionarios = string_todos_funcionarios + "SALÁRIO DO FUNCIONARIO: " + str(dado["salario"]) + '\n\n'
 
+            sg.Popup('-------- LISTA DE FUNCIONÁRIOS ----------', string_todos_funcionarios)
+        except KeyError as e:
+            sg.Popup("Erro ao exibir dados de funcionários: ", str(e))
 
-            sg.Popup('-------- LISTA DE FUNCIONARIOS ----------', string_todos_clientes)
-            except KeyError as e:
-                sg.Popup("Erro ao exibir dados de funcionários: ", str(e))
       #self.__window = sg.Window('Lista de Funcionários').Layout(layout)
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_funcionario(self):
       sg.ChangeLookAndFeel('TealMono')
-      layout = [
-        [sg.Text('-------- SELECIONAR FUNCIONÁRIO ----------', font=("Helvica", 25))],
-        [sg.Text('Digite o CPF do funcionário que deseja selecionar:', font=("Helvica", 15))],
-        [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-        [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
-      ]
-      self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
-      button, values = self.open()
-      cpf = values['cpf']
-      self.close()
-      return cpf
+      while True:
+        try:
+          layout = [
+            [sg.Text('-------- SELECIONAR FUNCIONÁRIO ----------', font=("Helvica", 25))],
+            [sg.Text('Digite o nome do funcionario que deseja selecionar:', font=("Helvica", 15))],
+            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+            [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+          ]
+          self.__window = sg.Window('Seleciona funcionário').Layout(layout)
+
+          button, values = self.open()
+          nome = str(values['nome'])
+          if not isinstance(nome, str):
+            raise ValueError
+          self.close()
+          return nome
+
+        except ValueError:
+          sg.Popup("Insira um valor válido!", title = "ERRO")
+          self.close()
 
     def mostra_mensagem(self, msg):
       sg.popup("", msg)
