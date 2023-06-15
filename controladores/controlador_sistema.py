@@ -6,7 +6,7 @@ from controladores.controlador_mesa import ControladorMesa
 from controladores.controlador_pedido import ControladorPedido
 from controladores.controlador_reserva import ControladorReserva
 from limites.tela_sistema import TelaSistema
-
+import PySimpleGUI as sg
 
 class ControladorSistema:
 
@@ -77,22 +77,16 @@ class ControladorSistema:
                     for item in pedido.itens:
                         total += float(item.preco)
 
-        self.__tela_sistema.mostra_mensagem("==================================================================")                
-        self.__tela_sistema.mostra_mensagem("O valor ganho total durante o dia com o restaurante foi de R$ {:.2f}".format(total))
-        self.__tela_sistema.mostra_mensagem("==================================================================")
+        sg.Popup("O valor ganho total durante o dia com o restaurante foi de R$ {:.2f}".format(total), title = "Total ganho")
 
     def abrir_relatorio_total_clientes(self):
         total = self.controlador_clientes.calcular_total_clientes()
-        self.__tela_sistema.mostra_mensagem("========================================")
-        self.__tela_sistema.mostra_mensagem("Total de clientes em um dia: {} pessoas.".format(total))
-        self.__tela_sistema.mostra_mensagem("========================================")
+        sg.Popup("Total de clientes em um dia: {} pessoas.".format(total), title = "Total clientes")
     
     def abrir_relatorio_total_reservas(self):
         total_reservas = self.__controlador_reservas.total_reservas
         total = len(total_reservas)
-        self.__tela_sistema.mostra_mensagem("====================================")
-        self.__tela_sistema.mostra_mensagem("Total de reservas em um dia: {}".format(total))
-        self.__tela_sistema.mostra_mensagem("====================================")
+        sg.Popup("Total de reservas em um dia: {}".format(total), title = "Total reservas")
     
     def abrir_relatorio_mais_pedidos(self):
         contagem_itens = {}
@@ -112,9 +106,7 @@ class ControladorSistema:
                 maior_quantidade = quantidade
                 item_mais_pedido = item
 
-        self.__tela_sistema.mostra_mensagem("====================================")
-        self.__tela_sistema.mostra_mensagem("Item mais pedido: {}".format(item_mais_pedido))
-        self.__tela_sistema.mostra_mensagem("====================================")
+        sg.Popup("Item mais pedido: {}".format(item_mais_pedido))
     
     def finalizar_dia(self):
         self.__controlador_clientes.clientes.clear()
@@ -122,7 +114,7 @@ class ControladorSistema:
         self.__controlador_pedidos.total_pedidos.clear()
         self.__controlador_reservas.reservas.clear()
         self.__controlador_reservas.total_reservas.clear()
-        self.__tela_sistema.mostra_mensagem("---------- DIA FINALIZADO ----------")      
+        sg.Popup("---------- DIA FINALIZADO ----------", title = 'Fim do dia')      
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastra_mesas, 2: self.cadastra_itens_cardapio, 3: self.cadastra_funcionarios,
