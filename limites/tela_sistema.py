@@ -72,25 +72,43 @@ class TelaSistema(Tela):
     def close(self):
         self.__window.Close()
 
+    # def init_components(self):
+    #     #sg.theme_previewer()
+    #     sg.ChangeLookAndFeel('TealMono')
+    #     layout = [
+    #         [sg.Text('Bem vindo ao Sistema de Restaurante!', font=("Helvica",25))],
+    #         [sg.Text('ESCOLHA SUA OPÇÃO:', font=("Helvica",15)), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.Text('RELATÓRIOS', font=("Helvica",15))],
+    #         #[sg.Text('RESTAURANTE', font=("Helvica",25))],
+    #         [sg.Radio('Mesas',"RD1", key='1')],
+    #         [sg.Radio('Itens do cardápio',"RD1", key='2')],
+    #         [sg.Radio('Funcionários',"RD1", key='3')],
+    #         #[sg.Text('SISTEMA', font=("Helvica",25))],
+    #         [sg.Radio('Clientes',"RD1", key='4')],
+    #         [sg.Radio('Reservas',"RD1", key='5')],
+    #         [sg.Radio('Pedidos',"RD1", key='6')],
+    #         #[sg.Text('RELATÓRIOS', font=("Helvica",15))],
+    #         [sg.Radio('Relatório Valor Total',"RD1", key='7')],
+    #         [sg.Radio('Relatório Total Clientes',"RD1", key='8')],
+    #         [sg.Radio('Relatório Total Reservas',"RD1", key='9')],
+    #         [sg.Radio('Relatório Mais Pedidos',"RD1", key='10')],
+    #         [sg.Text('ENCERRAR', font=("Helvica",15))],
+    #         [sg.Radio('Finalizar o dia',"RD1", key='11')],
+    #         [sg.Radio('Finalizar sistema',"RD1", key='0')],
+    #         [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+    #     ]
+    #     self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+
     def init_components(self):
-        #sg.theme_previewer()
         sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('Bem vindo ao Sistema de Restaurante!', font=("Helvica",25))],
-            [sg.Text('ESCOLHA SUA OPÇÃO:', font=("Helvica",15))],
-            #[sg.Text('RESTAURANTE', font=("Helvica",25))],
-            [sg.Radio('Mesas',"RD1", key='1')],
-            [sg.Radio('Itens do cardápio',"RD1", key='2')],
-            [sg.Radio('Funcionários',"RD1", key='3')],
-            #[sg.Text('SISTEMA', font=("Helvica",25))],
-            [sg.Radio('Clientes',"RD1", key='4')],
+            [sg.Text('ESCOLHA SUA OPÇÃO:', font=("Helvica",15)), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.T(""), sg.Text('RELATÓRIOS', font=("Helvica",15))],
+            [sg.Radio('Mesas',"RD1", key='1'), sg.Text(" " * 60), sg.Radio('Relatório Valor Total',"RD1", key='7')],
+            [sg.Radio('Itens do cardápio',"RD1", key='2'), sg.Text(" " * 45), sg.Radio('Relatório Total Clientes',"RD1", key='8')],
+            [sg.Radio('Funcionários',"RD1", key='3'), sg.Text(" " * 51), sg.Radio('Relatório Total Reservas',"RD1", key='9')],
+            [sg.Radio('Clientes',"RD1", key='4'), sg.Text(" " * 58), sg.Radio('Relatório Mais Pedidos',"RD1", key='10')],
             [sg.Radio('Reservas',"RD1", key='5')],
             [sg.Radio('Pedidos',"RD1", key='6')],
-            [sg.Text('RELATÓRIOS', font=("Helvica",15))],
-            [sg.Radio('Relatório Valor Total',"RD1", key='7')],
-            [sg.Radio('Relatório Total Clientes',"RD1", key='8')],
-            [sg.Radio('Relatório Total Reservas',"RD1", key='9')],
-            [sg.Radio('Relatório Mais Pedidos',"RD1", key='10')],
             [sg.Text('ENCERRAR', font=("Helvica",15))],
             [sg.Radio('Finalizar o dia',"RD1", key='11')],
             [sg.Radio('Finalizar sistema',"RD1", key='0')],
