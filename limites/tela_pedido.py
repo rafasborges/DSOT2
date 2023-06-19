@@ -117,11 +117,13 @@ class TelaPedido(Tela):
     def mostra_dados_pedido(self, dados_pedido):
         string_todos_pedidos = ""
         for pedido in dados_pedido:
+            print(pedido)
             string_todos_pedidos += "CÓDIGO DO PEDIDO: " + str(pedido["codigo"]) + '\n'
             string_todos_pedidos += "ID DA RESERVA: " + str(pedido["id_reserva"]) + '\n'
-            string_todos_pedidos += "ITENS DO PEDIDO: " + '\n'
-            for i in range(len(pedido["itens"])):
-                string_todos_pedidos += str(pedido["itens"][i]) + '\n'
+            string_todos_pedidos += "ITENS DO PEDIDO: " + str(pedido["itens"]) + '\n\n'
+            # string_todos_pedidos += "ITENS DO PEDIDO: " + '\n'
+            # for i in range(len(pedido["itens"])):
+            #     string_todos_pedidos += str(pedido["itens"][i]) + '\n'
 
         sg.Popup('-------- LISTA DE PEDIDOS ----------', string_todos_pedidos)
 

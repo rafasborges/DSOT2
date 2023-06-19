@@ -1,3 +1,4 @@
+from DAOs.cliente_dao import ClienteDAO
 from entidades.cliente import Cliente
 from exceptions.cliente_de_menor_exception import ClienteDeMenorException
 from exceptions.cliente_nao_existente_exception import ClienteNaoExistenteException
@@ -9,7 +10,7 @@ class ControladorCliente():
 
     def __init__(self, controlador_sistema):
         self.__clientes = []
-        # self.__amigo_DAO = AmigoDAO()
+        self.__cliente_DAO = ClienteDAO()
         self.__tela_cliente = TelaCliente()
         self.__controlador_sistema = controlador_sistema
     
