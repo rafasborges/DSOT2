@@ -57,9 +57,11 @@ class ControladorItemCardapio():
 
     def lista_itens_cardapio_formatado(self):
         if len(self.__itens_cardapio) == 0:
-                self.__tela_item_cardapio.mostra_mensagem("ATENÇÃO: Lista de itens vazia")
+            self.__tela_item_cardapio.mostra_mensagem("ATENÇÃO: Lista de itens vazia")
+        dados_itens = []
         for item in self.__itens_cardapio:
-            self.__tela_item_cardapio.mostra_item_cardapio_formatado({"nome": item.nome, "descricao": item.descricao, "codigo_item": item.codigo_item, "preco": item.preco})
+            dados_itens.append({"nome": item.nome, "descricao": item.descricao, "codigo_item": item.codigo_item, "preco": item.preco})
+        self.__tela_item_cardapio.mostra_item_cardapio(dados_itens)    
 
     def excluir_item(self):
         self.lista_itens_cardapio()

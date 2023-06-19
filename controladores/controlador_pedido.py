@@ -21,7 +21,6 @@ class ControladorPedido():
   def incluir_pedido(self):
     lista = []
     self.__controlador_sistema.controlador_reservas.lista_reservas()
-    self.__tela_pedido.mostra_mensagem("----- CARDÁPIO -----")
     self.__controlador_sistema.controlador_itens_cardapio.lista_itens_cardapio_formatado()
 
     dados_pedido = self.__tela_pedido.pega_dados_pedido()
