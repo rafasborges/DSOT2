@@ -65,7 +65,7 @@ class ControladorReserva():
 
 
   def lista_reservas(self):
-    if len(self.__reservas) == 0:
+      if len(self.__reservas) == 0:
        self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
     dados_reservas = []
     for e in self.__reservas:
