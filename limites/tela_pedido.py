@@ -84,8 +84,8 @@ class TelaPedido(Tela):
             [sg.Text('-------- RESERVAS ----------', font=("Helvica", 25))],
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
             [sg.Radio('Incluir Pedido', "RD1", key='1')],
-            [sg.Radio('Excluir Pedido', "RD1", key='2')],
-            [sg.Radio('Listar Pedido', "RD1", key='3')],
+            [sg.Radio('Listar Pedido', "RD1", key='2')],
+            [sg.Radio('Excluir Pedido', "RD1", key='3')],
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
         ]
@@ -114,13 +114,15 @@ class TelaPedido(Tela):
         return {"codigo": codigo, "id_reserva": id_reserva, "lista_itens": lista_itens}
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    def mostra_pedido(self, dados_pedido):
+    def mostra_dados_pedido(self, dados_pedido):
         string_todos_pedidos = ""
         for pedido in dados_pedido:
-            string_todos_pedidos = string_todos_pedidos + "CÓDIGO DO PEDIDO: " + str(pedido["codigo"]) + '\n'
-            string_todos_pedidos = string_todos_pedidos + "ID DA RESERVA: " + str(pedido["id_reserva"]) + '\n'
-            string_todos_pedidos = string_todos_pedidos + "ITENS DO PEDIDO: " + str(pedido["lista_itens"]) + '\n\n'
-            
+            string_todos_pedidos += "CÓDIGO DO PEDIDO: " + str(pedido["codigo"]) + '\n'
+            string_todos_pedidos += "ID DA RESERVA: " + str(pedido["id_reserva"]) + '\n'
+            string_todos_pedidos += "ITENS DO PEDIDO: " + '\n'
+            for i in range(len(pedido["itens"])):
+                string_todos_pedidos += str(pedido["itens"][i]) + '\n'
+
         sg.Popup('-------- LISTA DE PEDIDOS ----------', string_todos_pedidos)
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
