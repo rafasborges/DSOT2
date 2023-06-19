@@ -1,5 +1,5 @@
 from DAOs.dao import DAO
-from entidade.mesa import Mesa
+from entidades.cliente import Cliente
 
 #cada entidade terá uma classe dessa, implementação bem simples.
 class ClienteDAO(DAO):
