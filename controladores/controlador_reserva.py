@@ -11,17 +11,17 @@ from entidades.reserva import Reserva
 
 class ControladorReserva():
 
-  def __init__(self, controlador_sistema):
-    self.__controlador_sistema = controlador_sistema
-    self.__reservas = []
-    self.__total_reservas = []
-    self.__tela_reserva = TelaReserva()
+    def __init__(self, controlador_sistema):
+        self.__controlador_sistema = controlador_sistema
+        self.__reservas = []
+        self.__total_reservas = []
+        self.__tela_reserva = TelaReserva()
 
-  def pega_reserva_por_id(self, id: int):
-    for reserva in self.__reservas:
-      if(int(reserva.id) == int(id)):
-        return reserva
-    return None
+    def pega_reserva_por_id(self, id: int):
+        for reserva in self.__reservas:
+            if(int(reserva.id) == int(id)):
+                return reserva
+        return None
 
   def incluir_reserva(self):
     self.__controlador_sistema.controlador_clientes.lista_clientes()
@@ -64,10 +64,10 @@ class ControladorReserva():
         self.__tela_reserva.mostra_mensagem(str(e))
 
 
-  def lista_reservas(self):
-      if len(self.__reservas) == 0:
-       self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
-    dados_reservas = []
+    def lista_reservas(self):
+        if len(self.__reservas) == 0:
+        self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
+        dados_reservas = []
     for e in self.__reservas:
       dados_reservas.append({"nome_cliente": e.cliente.nome,
                               "nome_funcionario": e.funcionario.nome,
