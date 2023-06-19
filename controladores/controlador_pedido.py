@@ -6,7 +6,6 @@ from limites.tela_pedido import TelaPedido
 from entidades.pedido import Pedido
 
 class ControladorPedido():
-
   def __init__(self, controlador_sistema):
     self.__controlador_sistema = controlador_sistema
     self.__pedidos = []
