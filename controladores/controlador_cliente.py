@@ -9,7 +9,6 @@ from limites.tela_cliente import TelaCliente
 class ControladorCliente():
 
     def __init__(self, controlador_sistema):
-        self.__clientes = []
         self.__cliente_DAO = ClienteDAO()
         self.__tela_cliente = TelaCliente()
         self.__controlador_sistema = controlador_sistema
@@ -25,7 +24,7 @@ class ControladorCliente():
         return pessoas
 
     def pega_cliente_por_cpf(self, cpf: str):
-        for cliente in self.__clientes:
+        for cliente in self.__cliente_DAO.get_all():
             if(cliente.cpf == str(cpf)):
                 return cliente
         return None
@@ -41,7 +40,7 @@ class ControladorCliente():
                 try:
                     if cliente == None:
                         cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["idade"], dados_cliente["num_convidados"])
-                        self.__clientes.append(cliente)
+                        self.__cliente_DAO.append(cliente)
                     else:
                         raise ClienteRepetidoException(cpf)
                 except ClienteRepetidoException as e:
@@ -63,6 +62,7 @@ class ControladorCliente():
                 cliente.cpf = novos_dados_cliente["cpf"]
                 cliente.idade = novos_dados_cliente["idade"]
                 cliente.num_convidados = novos_dados_cliente["num_convidados"]
+                self.__cliente_DAO.update(cliente)
                 self.lista_clientes()
             else:
                 raise ClienteNaoExistenteException(cpf_cliente)
@@ -74,7 +74,7 @@ class ControladorCliente():
         if len(self.__clientes) == 0:
                 self.__tela_cliente.mostra_mensagem("ATENÇÃO: Lista de clientes vazia")
         dados_clientes = []
-        for cliente in self.__clientes:
+        for cliente in self.__cliente_DAO.get_all():
             dados_clientes.append({"nome": cliente.nome, "cpf": cliente.cpf, "idade": cliente.idade, "num_convidados": cliente.num_convidados})
         self.__tela_cliente.mostra_cliente(dados_clientes)
         
@@ -85,7 +85,7 @@ class ControladorCliente():
 
         try:
             if cliente is not None:
-                self.__clientes.remove(cliente)
+                self.__cliente_DAO.remove(cliente.cpf)
                 self.lista_clientes()
             else:
                 raise ClienteNaoExistenteException(cpf_cliente)
