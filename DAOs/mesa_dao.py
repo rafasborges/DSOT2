@@ -1,6 +1,5 @@
 from DAOs.dao import DAO
-from entidade.mesa import Mesa
-
+from entidades.mesa import Mesa
 #cada entidade terá uma classe dessa, implementação bem simples.
 class MesaDAO(DAO):
     def __init__(self):

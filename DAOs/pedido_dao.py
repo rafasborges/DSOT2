@@ -1,5 +1,5 @@
 from DAOs.dao import DAO
-from entidade.pedido import Pedido
+from entidades.pedido import Pedido
 
 #cada entidade terá uma classe dessa, implementação bem simples.
 class PedidoDAO(DAO):

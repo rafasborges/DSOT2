@@ -1,5 +1,6 @@
 from DAOs.dao import DAO
-from entidade.reserva import Reserva
+from entidades.pessoa import Pessoa
+
 
 #cada entidade terá uma classe dessa, implementação bem simples.
 class PessoaDAO(DAO):

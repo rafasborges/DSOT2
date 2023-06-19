@@ -1,6 +1,5 @@
 from DAOs.dao import DAO
-from entidade.mesa import Mesa
-
+from entidades.itemCardapio import ItemCardapio
 #cada entidade terá uma classe dessa, implementação bem simples.
 class ItemCardapioDAO(DAO):
     def __init__(self):
