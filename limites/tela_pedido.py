@@ -34,7 +34,7 @@ class TelaPedido(Tela):
             [sg.Radio('Listar Pedido', "RD1", key='2')],
             [sg.Radio('Excluir Pedido', "RD1", key='3')],
             [sg.Radio('Retornar', "RD1", key='0')],
-            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
@@ -49,7 +49,7 @@ class TelaPedido(Tela):
                     [sg.Text('Código do Pedido:', size=(15, 1)), sg.InputText('', key='codigo')],
                     [sg.Text('Id da Reserva que efetuou o Pedido:', size=(15, 1)), sg.InputText('', key='id_reserva')],
                     [sg.Text('Código dos itens que deseja selecionar (separados por vírgula):', size=(15, 1)), sg.InputText('', key='cod_itens')],
-                    [sg.Cancel('Cancelar'), sg.Button('Confirmar')]
+                    [sg.Button('Voltar'), sg.Cancel('Confirmar')]
                 ]
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
@@ -91,7 +91,7 @@ class TelaPedido(Tela):
                     [sg.Text('-------- SELECIONAR PEDIDO ----------', font=("Helvica", 25))],
                     [sg.Text('Digite o código do pedido que deseja selecionar:', font=("Helvica", 15))],
                     [sg.Text('codigo:', size=(15, 1)), sg.InputText('', key='codigo')],
-                    [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+                    [sg.Button('Voltar'), sg.Cancel('Confirmar')]
                 ]
                 self.__window = sg.Window('Seleciona pedido').Layout(layout)
 

@@ -37,7 +37,7 @@ class TelaMesa(Tela):
             [sg.Radio('Excluir Mesa', "RD1", key='3')],
             [sg.Radio('Listar Mesa', "RD1", key='4')],
             [sg.Radio('Retornar', "RD1", key='0')],
-            [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
@@ -103,7 +103,7 @@ class TelaMesa(Tela):
                     [sg.Text('-------- SELECIONAR MESA ----------', font=("Helvica", 25))],
                     [sg.Text('Digite o número da mesa que deseja selecionar:', font=("Helvica", 15))],
                     [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
-                    [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+                    [sg.Button('Voltar'), sg.Cancel('Confirmar')]
                 ]
                 self.__window = sg.Window('Seleciona mesa').Layout(layout)
 

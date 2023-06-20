@@ -35,7 +35,7 @@ class TelaItemCardapio(Tela):
       [sg.Radio('Excluir Item', "RD1", key='3')],
       [sg.Radio('Listar Itens', "RD1", key='4')],
       [sg.Radio('Retornar', "RD1", key='0')],
-      [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+      [sg.Button('Voltar'), sg.Cancel('Confirmar')]
     ]
     self.__window = sg.Window('Sistema de restaurante').Layout(layout)
 
@@ -49,7 +49,7 @@ class TelaItemCardapio(Tela):
           [sg.Text('Descrição:', size=(15, 1)), sg.InputText('', key='descricao')],
           [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo_item')],
           [sg.Text('Preço:', size=(15, 1)), sg.InputText('', key='preco')],
-          [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+          [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de livros').Layout(layout)
 
@@ -105,7 +105,7 @@ class TelaItemCardapio(Tela):
           [sg.Text('-------- SELECIONAR ITEM ----------', font=("Helvica", 25))],
           [sg.Text('Digite o código do Item que deseja selecionar:', font=("Helvica", 15))],
           [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
-          [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+          [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Seleciona item').Layout(layout)
 

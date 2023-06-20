@@ -39,7 +39,7 @@ class TelaFuncionario(Tela):
         [sg.Radio('Listar Funcionário', "RD1", key='4')],
         [sg.Radio('Ver salário Funcionário', "RD1", key='5')],
         [sg.Radio('Retornar', "RD1", key='0')],
-        [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+        [sg.Button('Voltar'), sg.Cancel('Confirmar')]
       ]
       self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
@@ -54,7 +54,7 @@ class TelaFuncionario(Tela):
             [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
             [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
             [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
-            [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
           ]
           self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
@@ -97,7 +97,7 @@ class TelaFuncionario(Tela):
             [sg.Text('-------- SELECIONAR FUNCIONÁRIO ----------', font=("Helvica", 25))],
             [sg.Text('Digite o nome do funcionario que deseja selecionar:', font=("Helvica", 15))],
             [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
-            [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
           ]
           self.__window = sg.Window('Seleciona funcionário').Layout(layout)
 
