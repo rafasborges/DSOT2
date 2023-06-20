@@ -51,7 +51,7 @@ class TelaMesa(Tela):
                     [sg.Text('-------- DADOS MESA ----------', font=("Helvica", 25))],
                     [sg.Text('Número:', size=(15, 1)), sg.InputText('', key='numero')],
                     [sg.Text('Capacidade:', size=(15, 1)), sg.InputText('', key='capacidade')],
-                    [sg.Cancel('Voltar'), sg.Button('Confirmar')]
+                    [sg.Button('Voltar'), sg.Button('Confirmar')]
                 ]
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
@@ -61,10 +61,12 @@ class TelaMesa(Tela):
                 capacidade = int(values['capacidade'])
                 #tentando fazer com que volte
 
-                if values['0'] or button in (None, 'Voltar'):
-                    opcao = 0
-                self.close()
-                return opcao
+                #if values['0'] or button in (None, 'Voltar'):
+                    #opcao = 0
+                #self.close()
+                #return opcao
+                if button == "Voltar" or button == None:
+                    return None
 
                 if (not isinstance(numero, int) or
                         not isinstance(capacidade, int) or
@@ -72,10 +74,10 @@ class TelaMesa(Tela):
                         raise ValueError
 
                 self.close()
-                return {"numero": numero, "capacidade": capacidade}
-            except ValueError:
-                    sg.Popup("Dados incorretos, utilize apenas números positivos para número e capacidade!", title = "ERRO")
-                    self.close()
+                return numero #{"numero": numero, "capacidade": capacidade}
+            #except ValueError:
+                   # sg.Popup("Dados incorretos, utilize apenas números positivos para número e capacidade!", title = "ERRO")
+                   # self.close()
 
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado

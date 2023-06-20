@@ -19,6 +19,8 @@ class ControladorMesa():
 
     def incluir_mesa(self):
         dados_mesa = self.__tela_mesa.pega_dados_mesa()
+        if dados_mesa == None:
+            return
         numero = dados_mesa["numero"]
         capacidade = dados_mesa["capacidade"]
         mesa = self.pega_mesa_por_numero(numero)
@@ -91,3 +93,4 @@ class ControladorMesa():
         continua = True
         while continua:
             lista_opcoes[self.__tela_mesa.tela_opcoes()]()
+
