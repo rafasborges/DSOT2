@@ -19,7 +19,7 @@ class ControladorCliente():
     
     def calcular_total_clientes(self):
         pessoas = 0
-        for cliente in self.__clientes:
+        for cliente in self.__cliente_DAO.get_all():
             pessoas += 1 + int(cliente.num_convidados)
         return pessoas
 
@@ -40,7 +40,7 @@ class ControladorCliente():
                 try:
                     if cliente == None:
                         cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["idade"], dados_cliente["num_convidados"])
-                        self.__cliente_DAO.append(cliente)
+                        self.__cliente_DAO.add(cliente)
                     else:
                         raise ClienteRepetidoException(cpf)
                 except ClienteRepetidoException as e:
@@ -71,8 +71,8 @@ class ControladorCliente():
 
 
     def lista_clientes(self):
-        if len(self.__clientes) == 0:
-                self.__tela_cliente.mostra_mensagem("ATENÇÃO: Lista de clientes vazia")
+        if len(self.__cliente_DAO.get_all()) == 0:
+            self.__tela_cliente.mostra_mensagem("ATENÇÃO: Lista de clientes vazia")
         dados_clientes = []
         for cliente in self.__cliente_DAO.get_all():
             dados_clientes.append({"nome": cliente.nome, "cpf": cliente.cpf, "idade": cliente.idade, "num_convidados": cliente.num_convidados})
@@ -103,5 +103,5 @@ class ControladorCliente():
             lista_opcoes[self.__tela_cliente.tela_opcoes()]()
 
     @property
-    def clientes(self):
-        return self.__clientes
+    def cliente_DAO(self):
+        return self.__cliente_DAO
