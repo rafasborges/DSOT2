@@ -19,7 +19,7 @@ class ControladorMesa():
 
     def incluir_mesa(self):
         dados_mesa = self.__tela_mesa.pega_dados_mesa()
-        if dados_mesa == None:
+        if dados_mesa == None or dados_mesa["capacidade"] == 900 or dados_mesa['numero'] == 0:
             return
         numero = dados_mesa["numero"]
         capacidade = dados_mesa["capacidade"]

@@ -21,7 +21,7 @@ class TelaMesa(Tela):
             opcao = 4
         # cobre os casos de Retornar, fechar janela, ou clicar cancelar
         # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
+        if values['0'] or button in (None, 'Cancelar', "Voltar", "Sair"):
             opcao = 0
         self.close()
         return opcao
@@ -57,18 +57,27 @@ class TelaMesa(Tela):
 
             
                 button, values = self.open()
-                numero = int(values['numero'])
-                capacidade = int(values['capacidade'])
+                print(button, values)
+                if len(values['numero']) > 0:
+                    numero = int(values['numero'])
+                    if len(values['capacidade']) > 0:
+                        capacidade = int(values['capacidade'])
+                else:
+                    numero, capacidade = 0, 900
                 #tentando fazer com que volte
+                print(button, values)
 
-                if values['0'] or button in (None, 'Voltar'):
-                    opcao = 0
+                variavel = values.get('0', 'insight')
+
+                if variavel != "insight":
+                    if variavel or button in (None, 'Voltar'):
+                        opcao = 0
                 #self.close()
-                return opcao
+                    return opcao
                 print(values)
-                if (not isinstance(numero, int) or
+                if button != "Voltar" and ((not isinstance(numero, int) or
                         not isinstance(capacidade, int) or
-                        numero < 0 or capacidade < 0):
+                        numero < 0 or capacidade < 0)):
                         raise ValueError
 
                 self.close()
