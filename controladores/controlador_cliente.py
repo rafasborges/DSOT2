@@ -39,8 +39,11 @@ class ControladorCliente():
             if i:
                 try:
                     if cliente == None:
-                        cliente = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["idade"], dados_cliente["num_convidados"])
-                        self.__cliente_DAO.add(cliente)
+                        cli = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["idade"], dados_cliente["num_convidados"])
+                        self.__cliente_DAO.add(cli)
+                        print(cli)
+                        print(self.__cliente_DAO)
+                        print(self.__cliente_DAO.get_all())
                     else:
                         raise ClienteRepetidoException(cpf)
                 except ClienteRepetidoException as e:
@@ -102,6 +105,6 @@ class ControladorCliente():
         while continua:
             lista_opcoes[self.__tela_cliente.tela_opcoes()]()
 
-    @property
-    def cliente_DAO(self):
-        return self.__cliente_DAO
+    # @property
+    # def cliente_DAO(self):
+    #     return self.__cliente_DAO

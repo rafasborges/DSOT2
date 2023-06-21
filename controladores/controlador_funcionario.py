@@ -1,3 +1,4 @@
+from DAOs.funcionario_dao import FuncionarioDAO
 from entidades.funcionario import Funcionario
 from exceptions.funcionario_nao_existente_exception import FuncionarioNaoExistenteException
 from exceptions.funcionario_repetido_exception import FuncionarioRepetidoException
@@ -5,18 +6,21 @@ from limites.tela_funcionario import TelaFuncionario
 
 class ControladorFuncionario():
     def __init__(self, controlador_sistema):
-        self.__funcionarios = []
+        # self.__funcionarios = []
+        self.__funcionario_DAO = FuncionarioDAO()
         self.__tela_funcionario = TelaFuncionario()
         self.__controlador_sistema = controlador_sistema
 
     def pega_funcionario_por_nome(self, nome: str):
-        for funcionario in self.__funcionarios:
+        # for funcionario in self.__funcionarios:
+        for funcionario in self.__funcionario_DAO.get_all():
             if(funcionario.nome == nome):
                 return funcionario
         return None
 
     def pega_funcionario_por_cpf(self, cpf: str):
-        for funcionario in self.__funcionarios:
+        # for funcionario in self.__funcionarios:
+        for funcionario in self.__funcionario_DAO.get_all():
             if(funcionario.cpf == cpf):
                 return funcionario
         return None
@@ -28,7 +32,8 @@ class ControladorFuncionario():
         try:
             if funcionario == None:
                 funcionario = Funcionario(dados_funcionario["nome"], dados_funcionario["cpf"], dados_funcionario["salario"])
-                self.__funcionarios.append(funcionario)
+                # self.__funcionarios.append(funcionario)
+                self.__funcionario_DAO.add(funcionario)
             else:
                 raise FuncionarioRepetidoException(cpf)
         except FuncionarioRepetidoException as e:
@@ -46,6 +51,7 @@ class ControladorFuncionario():
                 funcionario.nome = novos_dados_funcionario["nome"]
                 funcionario.cpf = novos_dados_funcionario["cpf"]
                 funcionario.idade = novos_dados_funcionario["salario"]
+                self.__funcionario_DAO.update(funcionario)
                 self.lista_funcionarios()
             else:
                 raise FuncionarioNaoExistenteException(nome_funcionario)
@@ -54,10 +60,11 @@ class ControladorFuncionario():
 
 
     def lista_funcionarios(self):
-        if len(self.__funcionarios) == 0:
+        if len(self.__funcionario_DAO.get_all()) == 0:
                 self.__tela_funcionario.mostra_mensagem("ATENÇÃO: Lista de funcionários vazia")
         dados_funcionarios = []
-        for funcionario in self.__funcionarios:
+        # for funcionario in self.__funcionarios:
+        for funcionario in self.__funcionario_DAO.get_all():
             dados_funcionarios.append({"nome": funcionario.nome, "cpf": funcionario.cpf, "salario": funcionario.salario})
         self.__tela_funcionario.mostra_funcionario(dados_funcionarios)
 
@@ -68,7 +75,8 @@ class ControladorFuncionario():
         
         try:
             if(funcionario is not None):
-                self.__funcionarios.remove(funcionario)
+                # self.__funcionarios.remove(funcionario)
+                self.__funcionario_DAO.remove(funcionario.nome)
                 self.lista_funcionarios()
             else:
                 raise FuncionarioNaoExistenteException(nome_funcionario)
