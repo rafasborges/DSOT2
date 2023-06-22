@@ -21,7 +21,7 @@ class TelaReserva(Tela):
             opcao = 4
         # cobre os casos de Retornar, fechar janela, ou clicar cancelar
         # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
+        if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
             opcao = 0
         self.close()
         return opcao
