@@ -1,3 +1,4 @@
+from DAOs.itemCardapio_dao import ItemCardapioDAO
 from entidades.itemCardapio import ItemCardapio
 from exceptions.item_cardapio_repetido_exception import ItemCardapioRepetidoException
 from exceptions.item_nao_existente_exception import ItemNaoExistenteException
@@ -6,12 +7,14 @@ from limites.tela_item_cardapio import TelaItemCardapio
 
 class ControladorItemCardapio():
     def __init__(self, controlador_sistema):
-        self.__itens_cardapio = []
+        # self.__itens_cardapio = []
+        self.__item_cardapio_DAO = ItemCardapioDAO()
         self.__tela_item_cardapio = TelaItemCardapio()
         self.__controlador_sistema = controlador_sistema
 
     def pega_item_por_cod(self, codigo_item: int):
-        for item in self.__itens_cardapio:
+        # for item in self.__itens_cardapio:
+        for item in self.__item_cardapio_DAO.get_all():
             if(int(item.codigo_item) == int(codigo_item)):
                 return item
         return None
@@ -23,7 +26,8 @@ class ControladorItemCardapio():
         try:
             if item == None:
                 item = ItemCardapio(dados_item["nome"], dados_item["descricao"], dados_item["codigo_item"], dados_item["preco"])
-                self.__itens_cardapio.append(item)
+                # self.__itens_cardapio.append(item)
+                self.__item_cardapio_DAO.add(item)
             else:
                 raise ItemCardapioRepetidoException(codigo_item)
         except ItemCardapioRepetidoException as e:
@@ -41,6 +45,7 @@ class ControladorItemCardapio():
                 item.descricao = novos_dados_item["descricao"]
                 item.codigo_item = novos_dados_item["codigo_item"]
                 item.preco = novos_dados_item["preco"]
+                self.__item_cardapio_DAO.update(item)
                 self.lista_itens_cardapio()
             else:
                 raise ItemNaoExistenteException(cod_item)
@@ -48,18 +53,20 @@ class ControladorItemCardapio():
             self.__tela_item_cardapio.mostra_mensagem(a)
 
     def lista_itens_cardapio(self):
-        if len(self.__itens_cardapio) == 0:
+        if len(self.__item_cardapio_DAO.get_all()) == 0:
                 self.__tela_item_cardapio.mostra_mensagem("ATENÇÃO: Lista de itens vazia")
         dados_itens = []
-        for item in self.__itens_cardapio:
+        # for item in self.__itens_cardapio:
+        for item in self.__item_cardapio_DAO.get_all():
             dados_itens.append({"nome": item.nome, "descricao": item.descricao, "codigo_item": item.codigo_item, "preco": item.preco})
         self.__tela_item_cardapio.mostra_item_cardapio(dados_itens)    
 
     def lista_itens_cardapio_formatado(self):
-        if len(self.__itens_cardapio) == 0:
+        if len(self.__item_cardapio_DAO.get_all()) == 0:
             self.__tela_item_cardapio.mostra_mensagem("ATENÇÃO: Lista de itens vazia")
         dados_itens = []
-        for item in self.__itens_cardapio:
+        # for item in self.__itens_cardapio:
+        for item in self.__item_cardapio_DAO.get_all():
             dados_itens.append({"nome": item.nome, "descricao": item.descricao, "codigo_item": item.codigo_item, "preco": item.preco})
         self.__tela_item_cardapio.mostra_item_cardapio(dados_itens)    
 
@@ -70,7 +77,8 @@ class ControladorItemCardapio():
 
         try:
             if(item is not None):
-                self.__itens_cardapio.remove(item)
+                # self.__itens_cardapio.remove(item)
+                self.__item_cardapio_DAO.remove(item.codigo_item)
                 self.lista_itens_cardapio()
             else:
                 raise ItemNaoExistenteException(cod_item)

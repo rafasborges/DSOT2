@@ -3,7 +3,7 @@ from entidades.itemCardapio import ItemCardapio
 #cada entidade terá uma classe dessa, implementação bem simples.
 class ItemCardapioDAO(DAO):
     def __init__(self):
-        super().__init__('mesas.pkl')
+        super().__init__('item_cardapio.pkl')
 
     def add(self, itemcardapio: ItemCardapio):
         if((itemcardapio is not None) and isinstance(itemcardapio, ItemCardapio) and isinstance(itemcardapio.codigo_item, int)):
@@ -11,7 +11,7 @@ class ItemCardapioDAO(DAO):
 
     def update(self, itemcardapio: ItemCardapio):
         if((itemcardapio is not None) and isinstance(itemcardapio, ItemCardapio) and isinstance(itemcardapio.codigo_item, int)):
-            super().update(itemcardapio.numero, itemcardapio)
+            super().update(itemcardapio.codigo_item, itemcardapio)
 
     def get(self, key:int):
         if isinstance(key, int):
