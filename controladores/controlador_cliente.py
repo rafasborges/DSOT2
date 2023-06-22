@@ -41,9 +41,6 @@ class ControladorCliente():
                     if cliente == None:
                         cli = Cliente(dados_cliente["nome"], dados_cliente["cpf"], dados_cliente["idade"], dados_cliente["num_convidados"])
                         self.__cliente_DAO.add(cli)
-                        print(cli)
-                        print(self.__cliente_DAO)
-                        print(self.__cliente_DAO.get_all())
                     else:
                         raise ClienteRepetidoException(cpf)
                 except ClienteRepetidoException as e:

@@ -1,3 +1,4 @@
+from DAOs.mesa_dao import MesaDAO
 from entidades.mesa import Mesa
 from exceptions.mesa_nao_existente_exception import MesaNaoExistenteException
 from limites.tela_mesa import TelaMesa
@@ -7,12 +8,12 @@ from exceptions.mesa_repetida_exception import MesaRepetidaException
 
 class ControladorMesa():
     def __init__(self, controlador_sistema):
-        self.__mesas = []
+        self.__mesa_DAO = MesaDAO()
         self.__tela_mesa = TelaMesa()
         self.__controlador_sistema = controlador_sistema
 
     def pega_mesa_por_numero(self, numero: int):
-        for mesa in self.__mesas:
+        for mesa in self.__mesa_DAO.get_all():
             if(int(mesa.numero) == int(numero)):
                 return mesa
         return None
@@ -27,7 +28,7 @@ class ControladorMesa():
         try:
             if mesa == None:
                 mesa = Mesa(dados_mesa["numero"], dados_mesa["capacidade"])
-                self.__mesas.append(mesa)
+                self.__mesa_DAO.add(mesa)
             else:
                 raise MesaRepetidaException(numero)
         except MesaRepetidaException as e:
@@ -43,6 +44,7 @@ class ControladorMesa():
                 novos_dados_mesa = self.__tela_mesa.pega_dados_mesa()
                 mesa.numero = novos_dados_mesa["numero"]
                 mesa.capacidade = novos_dados_mesa["capacidade"]
+                self.__mesa_DAO.update(mesa)
                 self.lista_mesas()
             else:
                 raise MesaNaoExistenteException(numero_mesa)
@@ -50,24 +52,24 @@ class ControladorMesa():
             self.__tela_mesa.mostra_mensagem(e)
 
     def lista_mesas(self):
-        if len(self.__mesas) == 0:
+        if len(self.__mesa_DAO.get_all()) == 0:
             self.__tela_mesa.mostra_mensagem("ATENÇÃO: Lista de mesas vazia")
         dados_mesas = []
-        for mesa in self.__mesas:
+        for mesa in self.__mesa_DAO.get_all():
             dados_mesas.append({"numero": mesa.numero, "capacidade": mesa.capacidade})
         self.__tela_mesa.mostra_dados_mesa(dados_mesas)
 
     def lista_mesas_disponiveis(self):
-        if len(self.__mesas) == 0:
+        if len(self.__mesa_DAO.get_all()) == 0:
             self.__tela_mesa.mostra_mensagem("ATENÇÃO: Lista de mesas vazia")
         dados_mesas_disp = []
-        for mesa in self.__mesas:
+        for mesa in self.__mesa_DAO.get_all():
             if mesa.status == False:
                 dados_mesas_disp.append({"numero": mesa.numero, "capacidade": mesa.capacidade})
         self.__tela_mesa.mostra_dados_mesa(dados_mesas_disp)
 
     def ha_mesas_disponiveis(self):
-        for mesa in self.__mesas:
+        for mesa in self.__mesa_DAO.get_all():
             if not mesa.status:
                 return True
         return False
@@ -78,7 +80,7 @@ class ControladorMesa():
         mesa = self.pega_mesa_por_numero(numero_mesa)
         try:
             if (mesa is not None):
-                self.__mesas.remove(mesa)
+                self.__mesa_DAO.remove(mesa.numero)
                 self.lista_mesas()
             else:
                 raise MesaNaoExistenteException(numero_mesa)

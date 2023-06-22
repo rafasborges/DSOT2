@@ -64,7 +64,7 @@ class TelaCliente(Tela):
                 if((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
                     raise ValueError
                 self.close()
-                return {"nome": nome, "cpf": int(cpf), "num_convidados": num_convidados, "idade": idade}
+                return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
             except ValueError:
                     sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números inteiros para a idade e número de convidados!", title = "ERRO")
                     self.close()
