@@ -54,8 +54,8 @@ class TelaPedido(Tela):
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
                 button, values = self.open()
-                codigo = values['codigo']
-                id_reserva = values['id_reserva']
+                codigo = int(values['codigo'])
+                id_reserva = int(values['id_reserva'])
                 cod_itens = values['cod_itens']
                 lista_itens = [int(numero) for numero in cod_itens.split(",")]
                 if ((not isinstance(codigo, int)) or

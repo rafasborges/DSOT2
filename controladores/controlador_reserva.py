@@ -1,3 +1,4 @@
+from DAOs.reserva_dao import ReservaDAO
 from exceptions.capacidade_da_mesa_excedida_exception import CapacidadeDaMesaExcedidaException
 from exceptions.nao_ha_mesas_disponiveis_exception import NaoHaMesasDisponiveisException
 from exceptions.reserva_nao_existente_exception import ReservaNaoExistenteException
@@ -13,12 +14,12 @@ class ControladorReserva():
 
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
-        self.__reservas = []
+        self.__reserva_DAO = ReservaDAO()
         self.__total_reservas = []
         self.__tela_reserva = TelaReserva()
 
     def pega_reserva_por_id(self, id: int):
-        for reserva in self.__reservas:
+        for reserva in self.__reserva_DAO.get_all():
             if(int(reserva.id) == int(id)):
                 return reserva
         return None
@@ -43,7 +44,7 @@ class ControladorReserva():
             if funcionario is None:
                 raise FuncionarioNaoExistenteException(dados_reserva["funcionario_nome"])
           
-            for reserva in self.__reservas:
+            for reserva in self.__reserva_DAO.get_all():
                 if reserva.id == id:
                     raise ReservaRepetidaException(id)
 
@@ -57,7 +58,8 @@ class ControladorReserva():
 
             reserva = Reserva(id, cliente, funcionario, mesa)
             mesa.status = True
-            self.__reservas.append(reserva)
+            # self.__reservas.append(reserva)
+            self.__reserva_DAO.add(reserva)
             self.__total_reservas.append(reserva)
           
         except (MesaNaoExistenteException, ClienteNaoExistenteException, FuncionarioNaoExistenteException, ReservaRepetidaException, CapacidadeDaMesaExcedidaException, NaoHaMesasDisponiveisException) as e:
@@ -65,10 +67,11 @@ class ControladorReserva():
 
 
     def lista_reservas(self):
-        if len(self.__reservas) == 0:
+        if len(self.__reserva_DAO.get_all()) == 0:
             self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
         dados_reservas = []
-        for e in self.__reservas:
+        # for e in self.__reservas:
+        for e in self.__reserva_DAO.get_all():
             dados_reservas.append({"nome_cliente": e.cliente.nome,
                                    "nome_funcionario": e.funcionario.nome,
                                    "num_mesa": e.mesa.numero,
@@ -82,7 +85,8 @@ class ControladorReserva():
       
         try:
             if (reserva is not None):
-                self.__reservas.remove(reserva)
+                # self.__reservas.remove(reserva)
+                self.__reserva_DAO.remove(reserva.id)
                 self.lista_reservas()
                 reserva.mesa.status = False
             else:
@@ -117,4 +121,4 @@ class ControladorReserva():
     
     @property
     def reservas(self):
-        return self.__reservas
+        return self.__reserva_DAO.get_all()

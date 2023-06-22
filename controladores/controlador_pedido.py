@@ -1,3 +1,4 @@
+from DAOs.pedido_dao import PedidoDAO
 from exceptions.item_nao_existente_exception import ItemNaoExistenteException
 from exceptions.pedido_nao_existente_exception import PedidoNaoExistenteException
 from exceptions.pedido_repetido_exception import PedidoRepetidoException
@@ -8,12 +9,14 @@ from entidades.pedido import Pedido
 class ControladorPedido():
   def __init__(self, controlador_sistema):
     self.__controlador_sistema = controlador_sistema
-    self.__pedidos = []
+    self.__pedido_DAO= PedidoDAO()
+    # self.__pedidos = []
     self.__total_pedidos = []
     self.__tela_pedido = TelaPedido()
 
   def pega_pedido_por_codigo(self, codigo: int):
-    for pedido in self.__pedidos:
+    # for pedido in self.__pedidos:
+    for pedido in self.__pedido_DAO.get_all():
       if(int(pedido.codigo) == int(codigo)):
         return pedido
     return None
@@ -33,7 +36,7 @@ class ControladorPedido():
       if reserva is None:
         raise ReservaNaoExistenteException(dados_pedido["id_reserva"] )
 
-      for pedido_existente in self.__pedidos:
+      for pedido_existente in self.__pedido_DAO.get_all():
         if pedido_existente.codigo == codigo:
             raise PedidoRepetidoException(codigo)
         
@@ -44,7 +47,8 @@ class ControladorPedido():
         lista.append(item)
 
       pedido = Pedido(codigo, reserva, lista)
-      self.__pedidos.append(pedido)
+      # self.__pedidos.append(pedido)
+      self.__pedido_DAO.add(pedido)
       self.__total_pedidos.append(pedido)
 
     except (PedidoRepetidoException, ReservaNaoExistenteException, ItemNaoExistenteException) as e:
@@ -52,10 +56,11 @@ class ControladorPedido():
     
 
   def lista_pedidos(self):
-    if len(self.__pedidos) == 0:
+    if len(self.__pedido_DAO.get_all()) == 0:
        self.__tela_pedido.mostra_mensagem("ATENÇÃO: Lista de pedidos vazia")
     dados_pedidos = []
-    for pedido in self.__pedidos:
+    # for pedido in self.__pedidos:
+    for pedido in self.__pedido_DAO.get_all():
         itens_pedido = ""
         for item in pedido.itens:
             if item is not None:
@@ -74,7 +79,8 @@ class ControladorPedido():
 
     try:
       if (pedido is not None):
-        self.__pedidos.remove(pedido)
+        # self.__pedidos.remove(pedido)
+        self.__pedido_DAO.remove(pedido.codigo)
         self.lista_pedidos()
       else:
         raise PedidoNaoExistenteException(codigo)
@@ -84,7 +90,7 @@ class ControladorPedido():
 
   def pega_pedido_por_id_reserva(self, id_reserva: int):
      lista = []
-     for pedido in self.__pedidos:
+     for pedido in self.__pedido_DAO.get_all():
       if(int(pedido.reserva.id) == int(id_reserva)):
         lista.append(pedido)
      return lista
@@ -105,4 +111,4 @@ class ControladorPedido():
   
   @property
   def pedidos(self):
-    return self.__pedidos
+    return self.__pedido_DAO.get_all()

@@ -102,6 +102,6 @@ class ControladorCliente():
         while continua:
             lista_opcoes[self.__tela_cliente.tela_opcoes()]()
 
-    # @property
-    # def cliente_DAO(self):
-    #     return self.__cliente_DAO
+    @property
+    def cliente(self):
+        return self.__cliente_DAO.get_all()
