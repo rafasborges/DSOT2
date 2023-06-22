@@ -1,4 +1,4 @@
-from limites.tela import Tela
+            from limites.tela import Tela
 import PySimpleGUI as sg
 
 class TelaMesa(Tela):
