@@ -117,8 +117,19 @@ class TelaFuncionario(Tela):
           self.__window = sg.Window('Seleciona funcionário').Layout(layout)
 
           button, values = self.open()
-          nome = str(values['nome'])
-          if not isinstance(nome, str):
+          if len(values['nome']) > 0:
+              nome = int(values['nome'])
+          else:
+              nome = " "
+
+          variavel = values.get('0', 'insight')
+
+          if variavel != "insight":
+              if variavel or button in (None, 'Voltar'):
+                  opcao = 0
+              return opcao
+
+          if button != 'Voltar' and not isinstance(nome, str):
             raise ValueError
           self.close()
           return nome
