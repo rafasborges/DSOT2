@@ -54,7 +54,7 @@ class TelaFuncionario(Tela):
             [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
             [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
             [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
-            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
+            [sg.Cancel('Voltar'), sg.Button('Confirmar')]
           ]
           self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 

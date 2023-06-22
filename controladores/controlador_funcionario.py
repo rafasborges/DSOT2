@@ -27,6 +27,8 @@ class ControladorFuncionario():
 
     def incluir_funcionario(self):
         dados_funcionario = self.__tela_funcionario.pega_dados_funcionario()
+        if dados_funcionario == None or dados_funcionario['nome'] == '' or dados_funcionario['cpf'] == '':
+            return
         cpf = dados_funcionario["cpf"]
         funcionario = self.pega_funcionario_por_cpf(cpf)
         try:
