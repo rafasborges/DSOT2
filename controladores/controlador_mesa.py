@@ -42,6 +42,8 @@ class ControladorMesa():
         try:
             if (mesa is not None):
                 novos_dados_mesa = self.__tela_mesa.pega_dados_mesa()
+                if novos_dados_mesa == None or novos_dados_mesa['numero'] == 0:
+                    return
                 mesa.numero = novos_dados_mesa["numero"]
                 mesa.capacidade = novos_dados_mesa["capacidade"]
                 self.__mesa_DAO.update(mesa)

@@ -50,18 +50,31 @@ class TelaCliente(Tela):
                     [sg.Text('-------- DADOS CLIENTE ----------', font=("Helvica", 25))],
                     [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
                     [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-                    [sg.Text('Número de convidados:', size=(15, 1)), sg.InputText('', key='num_convidados')],
+                    [sg.Text('Número de convidados:', size=(16, 1)), sg.InputText('', key='num_convidados', size=(44, 1))],
                     [sg.Text('Idade:', size=(15, 1)), sg.InputText('', key='idade')],
-                    [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+                    [sg.Cancel('Voltar'), sg.Button('Confirmar')]
                 ]
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
                 button, values = self.open()
-                nome = str(values['nome'])
-                cpf = str(values['cpf'])
-                num_convidados = int(values['num_convidados'])
-                idade = int(values['idade'])
-                if((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
+                if len(values['nome']) > 0:
+                    nome = str(values['nome'])
+                if len(values['cpf']) > 0:
+                    cpf = str(values['cpf'])
+                if len(values['num_convidados']) > 0:
+                    num_convidados = int(values['num_convidados'])
+                if len(values['idade']) > 0:
+                    idade = int(values['idade'])
+                else:
+                    nome, cpf, num_convidados, idade = '', '', 900, 900
+
+                variavel = values.get('', 'insight')
+                if variavel != 'insight':
+                    if variavel or button in (None, 'Voltar'):
+                        opcao = 0
+                    return opcao
+                
+                if button != 'Voltar' and ((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
                     raise ValueError
                 self.close()
                 return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}

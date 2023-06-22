@@ -90,13 +90,13 @@ class TelaPedido(Tela):
                 layout = [
                     [sg.Text('-------- SELECIONAR PEDIDO ----------', font=("Helvica", 25))],
                     [sg.Text('Digite o código do pedido que deseja selecionar:', font=("Helvica", 15))],
-                    [sg.Text('codigo:', size=(15, 1)), sg.InputText('', key='codigo')],
+                    [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
                     [sg.Button('Voltar'), sg.Cancel('Confirmar')]
                 ]
                 self.__window = sg.Window('Seleciona pedido').Layout(layout)
 
                 button, values = self.open()
-                codigo = values['codigo']
+                codigo = int(values['codigo'])
                 if not isinstance(codigo, int):
                     raise ValueError
                 self.close()

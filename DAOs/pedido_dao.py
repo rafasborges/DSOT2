@@ -5,6 +5,7 @@ from entidades.pedido import Pedido
 class PedidoDAO(DAO):
     def __init__(self):
         super().__init__('pedidos.pkl')
+        self.__total_pedidos = []
 
     def add(self, pedido: Pedido):
         if((pedido is not None) and isinstance(pedido, Pedido) and isinstance(pedido.codigo, int)):
@@ -18,6 +19,14 @@ class PedidoDAO(DAO):
         if isinstance(key, int):
             return super().get(key)
 
-    def remove(selfself, key:int):
+    def remove(self, key:int):
         if(isinstance(key, int)):
             return super().remove(key)
+    
+    def add_total(self, pedido: Pedido):
+        if((pedido is not None) and isinstance(pedido, Pedido) and isinstance(pedido.codigo, int)):
+            self.__total_pedidos.append(pedido)
+
+    @property
+    def total_pedidos(self):
+        return self.__total_pedidos

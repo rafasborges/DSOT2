@@ -31,6 +31,8 @@ class ControladorCliente():
 
     def incluir_cliente(self):
         dados_cliente = self.__tela_cliente.pega_dados_cliente()
+        if dados_cliente == None or dados_cliente["cpf"] == "" or dados_cliente["nome"] == "" or dados_cliente["num_convidados"] == 900 or dados_cliente["idade"] == 900:
+            return
         cpf = dados_cliente["cpf"]
         cliente = self.pega_cliente_por_cpf(cpf)
         idade = int(dados_cliente["idade"])

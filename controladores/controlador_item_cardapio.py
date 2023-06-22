@@ -21,6 +21,8 @@ class ControladorItemCardapio():
 
     def incluir_item(self):
         dados_item = self.__tela_item_cardapio.pega_dados_item_cardapio()
+        if dados_item == None or dados_item["nome"] == "" or dados_item["descricao"] == "" or dados_item["codigo_item"] == 900 or dados_item["preco"] == 900:
+            return
         codigo_item = dados_item["codigo_item"]
         item = self.pega_item_por_cod(codigo_item)
         try:
@@ -41,6 +43,8 @@ class ControladorItemCardapio():
         try:
             if(item is not None):
                 novos_dados_item = self.__tela_item_cardapio.pega_dados_item_cardapio()
+                if novos_dados_item == None or novos_dados_item["codigo_item"] == 0:
+                    return
                 item.nome = novos_dados_item["nome"]
                 item.descricao = novos_dados_item["descricao"]
                 item.codigo_item = novos_dados_item["codigo_item"]

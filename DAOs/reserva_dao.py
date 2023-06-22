@@ -5,6 +5,7 @@ from entidades.reserva import Reserva
 class ReservaDAO(DAO):
     def __init__(self):
         super().__init__('reservas.pkl')
+        self.__total_reservas = []
 
     def add(self, reserva: Reserva):
         if((reserva is not None) and isinstance(reserva, Reserva) and isinstance(reserva.id, int)):
@@ -21,3 +22,11 @@ class ReservaDAO(DAO):
     def remove(selfself, key:int):
         if(isinstance(key, int)):
             return super().remove(key)
+    
+    def add_total(self, reserva: Reserva):
+        if((reserva is not None) and isinstance(reserva, Reserva) and isinstance(reserva.id, int)):
+            self.__total_reservas.append(reserva)
+    
+    @property
+    def total_reservas(self):
+        return self.__total_reservas

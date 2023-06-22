@@ -56,16 +56,16 @@ class TelaItemCardapio(Tela):
         button, values = self.open()
         if len(values['nome']) > 0:
           nome = str(values['nome'])
-        if len(values['descricacao']) > 0:
+        if len(values['descricao']) > 0:
           descricao = str(values['descricao'])
         if len(values['codigo_item']) > 0:
           codigo_item = int(values['codigo_item'])
         if len(values['preco']) > 0:
           preco = float(values['preco'])
         else:
-          nome, descricao, codigo_item, preco = 0, 900, 900, 900
+          nome, descricao, codigo_item, preco = "", "", 900, 900
 
-        variavel = values.get('0', 'insight')
+        variavel = values.get('900', 'insight')
 
         if variavel != "insight":
           if variavel or button in (None, 'Voltar'):
@@ -85,7 +85,7 @@ class TelaItemCardapio(Tela):
       except ValueError:
         sg.Popup("Dados incorretos, utilize apenas números positivos em código e preço e letras em nome e descrição!", title = "ERRO")
         self.close()
-
+  
 
   def mostra_item_cardapio(self, dados_item):
     try:
@@ -96,7 +96,7 @@ class TelaItemCardapio(Tela):
         string_todos_itens = string_todos_itens + "CÓDIGO DO ITEM: " + str(dado["codigo_item"]) + '\n'
         string_todos_itens = string_todos_itens + "PREÇO DO ITEM: " + str(dado["preco"]) + '\n\n'
 
-      sg.Popup('-------- LISTA DE ITENS ----------', string_todos_itens)
+      sg.Popup('-------- LISTA DE ITENS ----------', string_todos_itens, title="")
     except KeyError as e:
       sg.Popup("Erro ao exibir dados do cardápio: ", str(e))
 
@@ -108,7 +108,7 @@ class TelaItemCardapio(Tela):
           item_info = "{} - {} - {} - R$ {:.2f}".format(dado["codigo_item"], dado["nome"], dado["descricao"], float(dado["preco"]))
           string_todos_itens += item_info + '\n'
 
-      sg.Popup('-------- LISTA DE ITENS CARDÁPIO ----------', string_todos_itens)
+      sg.Popup('-------- LISTA DE ITENS CARDÁPIO ----------', string_todos_itens, title="")
     except KeyError as e:
       sg.Popup("Erro ao exibir dados do cardápio: ", str(e))
 
@@ -120,14 +120,24 @@ class TelaItemCardapio(Tela):
         layout = [
           [sg.Text('-------- SELECIONAR ITEM ----------', font=("Helvica", 25))],
           [sg.Text('Digite o código do Item que deseja selecionar:', font=("Helvica", 15))],
-          [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo')],
-          [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+          [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo_item')],
+          [sg.Cancel('Voltar'), sg.Button('Confirmar')]
         ]
         self.__window = sg.Window('Seleciona item').Layout(layout)
 
         button, values = self.open()
-        codigo = int(values['codigo'])
-        if not isinstance(codigo, int):
+        if len(values['codigo_item']) > 0:
+          codigo = int(values['codigo_item'])
+        else:
+          codigo = 0
+
+        variavel = values.get('0', 'insight')
+        if variavel != "insight":
+          if variavel or button in (None, 'Voltar'):
+            opcao = 0
+          return opcao
+                
+        if button != 'Voltar' and (not isinstance(codigo, int)):
           raise ValueError
         self.close()
         return codigo
