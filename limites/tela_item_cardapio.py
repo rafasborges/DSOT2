@@ -49,16 +49,32 @@ class TelaItemCardapio(Tela):
           [sg.Text('Descrição:', size=(15, 1)), sg.InputText('', key='descricao')],
           [sg.Text('Código:', size=(15, 1)), sg.InputText('', key='codigo_item')],
           [sg.Text('Preço:', size=(15, 1)), sg.InputText('', key='preco')],
-          [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+          [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de livros').Layout(layout)
 
         button, values = self.open()
-        nome = str(values['nome'])
-        descricao = str(values['descricao'])
-        codigo_item = int(values['codigo_item'])
-        preco = float(values['preco'])
-        if ((self.checa_valor(nome) == True) or
+        if len(values['nome']) > 0:
+          nome = str(values['nome'])
+        if len(values['descricacao']) > 0:
+          descricao = str(values['descricao'])
+        if len(values['codigo_item']) > 0:
+          codigo_item = int(values['codigo_item'])
+        if len(values['preco']) > 0:
+          preco = float(values['preco'])
+        else:
+          nome, descricao, codigo_item, preco = 0, 900, 900, 900
+
+        variavel = values.get('0', 'insight')
+
+        if variavel != "insight":
+          if variavel or button in (None, 'Voltar'):
+            opcao = 0
+          # self.close()
+          return opcao
+        print(values)
+
+        if button != "Voltar" and ((self.checa_valor(nome) == True) or
                   (self.checa_valor(descricao) == True) or
                   not isinstance(codigo_item, int) or
                   not isinstance(preco, float)):
