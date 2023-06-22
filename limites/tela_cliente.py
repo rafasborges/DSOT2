@@ -93,7 +93,7 @@ class TelaCliente(Tela):
                 string_todos_clientes = string_todos_clientes + "NUM. DE CONVIDADOS: " + str(dado["num_convidados"]) + '\n'
                 string_todos_clientes = string_todos_clientes + "IDADE: " + str(dado["idade"]) + '\n\n'
 
-            sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes)
+            sg.Popup('-------- LISTA DE CLIENTES ----------', string_todos_clientes, title='')
 
         except KeyError as e:
             sg.Popup("Erro ao exibir dados do cliente: ", str(e))
@@ -123,7 +123,7 @@ class TelaCliente(Tela):
                 self.close()
 
     def mostra_mensagem(self, msg):
-        sg.popup("", msg)
+        sg.popup("", msg, title='')
 
     def close(self):
         self.__window.Close()

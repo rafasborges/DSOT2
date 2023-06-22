@@ -1,11 +1,13 @@
 from DAOs.dao import DAO
 from entidades.reserva import Reserva
+import pickle
 
 #cada entidade terá uma classe dessa, implementação bem simples.
 class ReservaDAO(DAO):
     def __init__(self):
         super().__init__('reservas.pkl')
         self.__total_reservas = []
+        
 
     def add(self, reserva: Reserva):
         if((reserva is not None) and isinstance(reserva, Reserva) and isinstance(reserva.id, int)):
@@ -26,6 +28,9 @@ class ReservaDAO(DAO):
     def add_total(self, reserva: Reserva):
         if((reserva is not None) and isinstance(reserva, Reserva) and isinstance(reserva.id, int)):
             self.__total_reservas.append(reserva)
+            arquivo = open("total_reservas.pickle", "wb")
+            pickle.dump(self.__total_reservas, arquivo)
+            arquivo.close()
     
     @property
     def total_reservas(self):

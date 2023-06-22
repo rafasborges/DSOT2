@@ -1,3 +1,4 @@
+import pickle
 from DAOs.dao import DAO
 from entidades.pedido import Pedido
 
@@ -26,6 +27,9 @@ class PedidoDAO(DAO):
     def add_total(self, pedido: Pedido):
         if((pedido is not None) and isinstance(pedido, Pedido) and isinstance(pedido.codigo, int)):
             self.__total_pedidos.append(pedido)
+            arquivo = open("total_pedidos.pickle", "wb")
+            pickle.dump(self.__total_pedidos, arquivo)
+            arquivo.close()
 
     @property
     def total_pedidos(self):

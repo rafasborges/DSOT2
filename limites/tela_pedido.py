@@ -78,7 +78,7 @@ class TelaPedido(Tela):
                 string_todos_pedidos += "ID DA RESERVA: " + str(pedido["id_reserva"]) + '\n'
                 string_todos_pedidos += "ITENS DO PEDIDO: " + '\n' + str(pedido["itens"]) + '\n\n'
 
-            sg.Popup('-------- LISTA DE PEDIDOS ----------', string_todos_pedidos)
+            sg.Popup('-------- LISTA DE PEDIDOS ----------', string_todos_pedidos, title='')
         except KeyError as e:
             sg.Popup("Erro ao exibir dados do pedido: ", str(e))
 
@@ -106,7 +106,7 @@ class TelaPedido(Tela):
                 self.close()
 
     def mostra_mensagem(self, msg):
-        sg.popup("", msg)
+        sg.popup("", msg, title='')
 
     def close(self):
         self.__window.Close()

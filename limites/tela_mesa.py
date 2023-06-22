@@ -1,5 +1,6 @@
-            from limites.tela import Tela
+from limites.tela import Tela
 import PySimpleGUI as sg
+
 
 class TelaMesa(Tela):
     def __init__(self):
@@ -171,7 +172,7 @@ class TelaMesa(Tela):
                 self.close()
 
     def mostra_mensagem(self, msg):
-        sg.popup("", msg)
+        sg.popup("", msg, title='')
 
     def close(self):
         self.__window.Close()

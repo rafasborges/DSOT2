@@ -85,7 +85,7 @@ class TelaReserva(Tela):
             string_todas_reservas = string_todas_reservas + "NOME DO CLIENTE: " + str(reserva["nome_cliente"]) + '\n'
             string_todas_reservas = string_todas_reservas + "NOME DO FUNCIONÁRIO: " + str(reserva["nome_funcionario"]) + '\n\n'
 
-        sg.Popup('-------- LISTA DE RESERVAS ----------', string_todas_reservas)
+        sg.Popup('-------- LISTA DE RESERVAS ----------', string_todas_reservas, title='')
       except KeyError as e:
         sg.Popup("Erro ao exibir dados da reserva: ", str(e))
 
@@ -118,7 +118,7 @@ class TelaReserva(Tela):
       sg.Popup("Valor total da reserva " + str(id_reserva) + ": R$ " + str(total))
 
     def mostra_mensagem(self, msg):
-        sg.popup("", msg)
+        sg.popup("", msg, title='')
 
     def close(self):
         self.__window.Close()

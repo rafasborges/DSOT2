@@ -146,7 +146,7 @@ class TelaItemCardapio(Tela):
         self.close()
 
   def mostra_mensagem(self, msg):
-    sg.popup("", msg)
+    sg.popup("", msg, title='')
 
   def close(self):
     self.__window.Close()

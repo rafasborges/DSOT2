@@ -82,7 +82,7 @@ class TelaFuncionario(Tela):
                 string_todos_funcionarios = string_todos_funcionarios + "CPF DO FUNCIONARIO: " + str(dado["cpf"]) + '\n'
                 string_todos_funcionarios = string_todos_funcionarios + "SALÁRIO DO FUNCIONARIO: " + str(dado["salario"]) + '\n\n'
 
-            sg.Popup('-------- LISTA DE FUNCIONÁRIOS ----------', string_todos_funcionarios)
+            sg.Popup('-------- LISTA DE FUNCIONÁRIOS ----------', string_todos_funcionarios, title='')
         except KeyError as e:
             sg.Popup("Erro ao exibir dados de funcionários: ", str(e))
 
@@ -113,7 +113,7 @@ class TelaFuncionario(Tela):
           self.close()
 
     def mostra_mensagem(self, msg):
-      sg.popup("", msg)
+      sg.popup("", msg, title='')
 
     def close(self):
       self.__window.Close()
