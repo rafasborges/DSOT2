@@ -164,7 +164,7 @@ class TelaMesa(Tela):
                 if button != "Voltar" and not isinstance(num_mesa, int) or (num_mesa < 0):
                     raise ValueError
                 self.close()
-                return {"numero": numero}
+                return {"numero": num_mesa}
 
             except ValueError:
                 sg.Popup("Insira um valor válido! O número da mesa deve ser um valor inteiro!", title = "ERRO")
