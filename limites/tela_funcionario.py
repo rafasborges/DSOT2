@@ -59,16 +59,31 @@ class TelaFuncionario(Tela):
           self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
           button, values = self.open()
-          nome = str(values['nome'])
-          cpf = str(values['cpf'])
-          salario = float(values['salario'])
-          if ((self.checa_valor(nome) == True) or
+          if len(values['nome']) > 0:
+              nome = str(values['nome'])
+          if len(values['cpf']) > 0:
+              cpf = str(values['cpf'])
+          if len(values['salario']) > 0:
+            salario = float(values['salario'])
+          else:
+              nome, cpf, salario = "", "", 900
+
+          variavel = values.get('900', 'insight')
+
+          if variavel != "insight":
+              if variavel or button in (None, 'Voltar'):
+                  opcao = 0
+              # self.close()
+              return opcao
+          print(values)
+
+          if button != "Voltar" and ((self.checa_valor(nome) == True) or
                     (not isinstance(salario, (int, float)) or
                     len(cpf) != 11) or
                     salario < 0):
                     raise ValueError
           self.close()
-          return {"nome": nome, "cpf": cpf, "salario": salario}
+          return {"nome": nome.upper(), "cpf": cpf, "salario": salario}
         except ValueError:
           sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números decimais positivos para o salário!", title = "ERRO")
         self.close()
@@ -102,8 +117,19 @@ class TelaFuncionario(Tela):
           self.__window = sg.Window('Seleciona funcionário').Layout(layout)
 
           button, values = self.open()
-          nome = str(values['nome'])
-          if not isinstance(nome, str):
+          if len(values['nome']) > 0:
+              nome = int(values['nome'])
+          else:
+              nome = " "
+
+          variavel = values.get('0', 'insight')
+
+          if variavel != "insight":
+              if variavel or button in (None, 'Voltar'):
+                  opcao = 0
+              return opcao
+
+          if button != 'Voltar' and not isinstance(nome, str):
             raise ValueError
           self.close()
           return nome
