@@ -30,6 +30,8 @@ class ControladorReserva():
         self.__controlador_sistema.controlador_mesas.lista_mesas_disponiveis()
 
         dados_reserva = self.__tela_reserva.pega_dados_reserva()
+        if dados_reserva == None or dados_reserva['id'] == 0:
+            return
         id = dados_reserva["id"]
 
         cliente = self.__controlador_sistema.controlador_clientes.pega_cliente_por_cpf(dados_reserva["cliente_cpf"])

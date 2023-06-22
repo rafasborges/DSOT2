@@ -53,18 +53,29 @@ class TelaReserva(Tela):
                 [sg.Text('Número da Mesa:', size=(15, 1)), sg.InputText('', key='mesa_num')],
                 [sg.Text('CPF do cliente:', size=(15, 1)), sg.InputText('', key='cliente_cpf')],
                 [sg.Text('Nome do funcionário:', size=(15, 1)), sg.InputText('', key='funcionario_nome')],
-                [sg.Button('Voltar'), sg.Cancel('Confirmar')]
+                [sg.Cancel('Voltar'), sg.Button('Confirmar')]
             ]
             self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
             button, values = self.open()
-            # if button == 'Cancelar':
-            #     self.close()
-            #     break
-            id = int(values['id'])
-            mesa_num = int(values['mesa_num'])
-            cliente_cpf = str(values['cliente_cpf'])
-            funcionario_nome = str(values['funcionario_nome'])
-            if ((not isinstance(id, int)) or 
+            if len(values['id']) > 0:
+              id = int(values['id'])
+            if len(values['mesa_num']) > 0:
+              mesa_num = int(values['mesa_num'])
+            if len(values['cliente_cpf']) > 0:
+              cliente_cpf = str(values['cliente_cpf'])
+            if len(values['funcionario_nome']):
+              funcionario_nome = str(values['funcionario_nome'])
+            else:
+               id, mesa_num, cliente_cpf, funcionario_nome = 0, 0, '', ''
+            
+            variavel = values.get('0', 'insight')
+
+            if variavel != "insight":
+                if variavel or button in (None, 'Voltar'):
+                  opcao = 0
+                return opcao
+            
+            if button != 'Voltar' and ((not isinstance(id, int)) or 
                 (not isinstance(mesa_num, int)) or
                 (self.checa_valor(funcionario_nome) == True)
                 or len(cliente_cpf) != 11):
