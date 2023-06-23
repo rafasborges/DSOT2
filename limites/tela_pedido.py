@@ -55,6 +55,8 @@ class TelaPedido(Tela):
 
                 button, values = self.open()
                 print(button, values)
+                cod_itens = values['cod_itens']
+                lista_itens = [int(numero) for numero in cod_itens.split(",")]
                 if len(values['codigo']) > 0:
                     codigo = int(values['codigo'])
                 if len(values['id_reserva']) > 0:
@@ -63,22 +65,22 @@ class TelaPedido(Tela):
                 #     cod_itens = values['cod_itens']
                 #     lista_itens = [int(numero) for numero in cod_itens.split(",")]
                 else:
-                    codigo, id_reserva, lista_itens = 0, 0, []
+                    codigo, id_reserva = 0, 0
                 print(button, values)
                 # if len(values['codigo_itens']) > 0:
                 #     cod_itens = values['cod_itens']
                 #     lista_itens = [int(numero) for numero in cod_itens.split(",")]
-                cod_itens = values['cod_itens']
-                lista_itens = [int(numero) for numero in cod_itens.split(",")]
+
                 
                 variavel = values.get('0', 'insight')
+
                 if variavel != 'insight':
                     if variavel or button in (None, 'Voltar'):
                         opcao = 0
                     return opcao
                     
                 if button != 'Voltar' and ((not isinstance(codigo, int)) or
-                    (not isinstance(id_reserva, int))):
+                                            (not isinstance(id_reserva, int))):
                     raise ValueError
                 self.close()
                 return {"codigo": codigo, "id_reserva": id_reserva, "lista_itens": lista_itens}
