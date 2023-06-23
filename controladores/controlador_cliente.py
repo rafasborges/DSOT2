@@ -55,6 +55,8 @@ class ControladorCliente():
     def alterar_cliente(self):
         self.lista_clientes()
         cpf_cliente = self.__tela_cliente.seleciona_cliente()
+        if cpf_cliente == None:
+            return
         cliente = self.pega_cliente_por_cpf(cpf_cliente)
 
         try:
@@ -85,6 +87,8 @@ class ControladorCliente():
     def excluir_cliente(self):
         self.lista_clientes()
         cpf_cliente = self.__tela_cliente.seleciona_cliente()
+        if cpf_cliente == None:
+            return
         cliente = self.pega_cliente_por_cpf(cpf_cliente)
 
         try:

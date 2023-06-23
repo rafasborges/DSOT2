@@ -55,26 +55,15 @@ class TelaMesa(Tela):
                 ]
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-            
                 button, values = self.open()
-                # print(button, values)
-                if len(values['numero']) > 0:
-                    numero = int(values['numero'])
-                if len(values['capacidade']) > 0:
-                    capacidade = int(values['capacidade'])
-                else:
-                    numero, capacidade = 0, 900
-                #tentando fazer com que volte
-                # print(button, values)
+                if button in [sg.WIN_CLOSED, 'Voltar']:
+                    self.__window.close()
+                    return None
 
-                variavel = values.get('0', 'insight')
+                numero = int(values['numero'])
+                capacidade = int(values['capacidade'])
 
-                if variavel != "insight":
-                    if variavel or button in (None, 'Voltar'):
-                        opcao = 0
-                    return opcao
-                # print(values)
-                if button != "Voltar" and ((not isinstance(numero, int) or
+                if ((not isinstance(numero, int) or
                         not isinstance(capacidade, int) or
                         numero < 0 or capacidade < 0)):
                         raise ValueError
@@ -116,19 +105,13 @@ class TelaMesa(Tela):
                 self.__window = sg.Window('Seleciona mesa').Layout(layout)
 
                 button, values = self.open()
-                if len(values['numero']) > 0:
-                    num_mesa = int(values['numero'])
-                else:
-                    num_mesa = 0
+                if button in [sg.WIN_CLOSED, 'Voltar']:
+                    self.__window.close()
+                    return None
+ 
+                num_mesa = int(values['numero'])
 
-                variavel = values.get('0', 'insight')
-
-                if variavel != "insight":
-                    if variavel or button in (None, 'Voltar'):
-                        opcao = 0
-                    return opcao
-                print(values)
-                if button != "Voltar" and not isinstance(num_mesa, int) or (num_mesa < 0):
+                if (not isinstance(num_mesa, int) or (num_mesa < 0)):
                     raise ValueError
                 self.close()
                 return num_mesa

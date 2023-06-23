@@ -57,25 +57,15 @@ class TelaReserva(Tela):
             ]
             self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
             button, values = self.open()
-            if len(values['id']) > 0:
-              id = int(values['id'])
-            if len(values['mesa_num']) > 0:
-              mesa_num = int(values['mesa_num'])
-            if len(values['cliente_cpf']) > 0:
-              cliente_cpf = str(values['cliente_cpf'])
-            if len(values['funcionario_nome']):
-              funcionario_nome = str(values['funcionario_nome'])
-            else:
-               id, mesa_num, cliente_cpf, funcionario_nome = 0, 0, '', ''
+            if button in [sg.WIN_CLOSED, 'Voltar']:
+              self.__window.close()
+              return None
+            id = int(values['id'])
+            mesa_num = int(values['mesa_num'])
+            cliente_cpf = str(values['cliente_cpf'])
+            funcionario_nome = str(values['funcionario_nome'])
             
-            variavel = values.get('0', 'insight')
-
-            if variavel != "insight":
-                if variavel or button in (None, 'Voltar'):
-                  opcao = 0
-                return opcao
-            
-            if button != 'Voltar' and ((not isinstance(id, int)) or 
+            if ((not isinstance(id, int)) or 
                 (not isinstance(mesa_num, int)) or
                 (self.checa_valor(funcionario_nome) == True)
                 or len(cliente_cpf) != 11):
@@ -116,6 +106,9 @@ class TelaReserva(Tela):
             self.__window = sg.Window('Seleciona reserva').Layout(layout)
 
             button, values = self.open()
+            if button in [sg.WIN_CLOSED, 'Voltar']:
+              self.__window.close()
+              return None
             id_reserva = int(values['id'])
             if not isinstance(id_reserva, int):
               raise ValueError

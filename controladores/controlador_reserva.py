@@ -86,6 +86,8 @@ class ControladorReserva():
     def excluir_reserva(self):
         self.lista_reservas()
         id_reserva = self.__tela_reserva.seleciona_reserva()
+        if id_reserva == None:
+            return
         reserva = self.pega_reserva_por_id(int(id_reserva))
       
         try:

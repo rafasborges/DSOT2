@@ -45,6 +45,8 @@ class ControladorFuncionario():
     def alterar_funcionario(self):
         self.lista_funcionarios()
         nome_funcionario = self.__tela_funcionario.seleciona_funcionario()
+        if nome_funcionario == None:
+            return
         funcionario = self.pega_funcionario_por_nome(nome_funcionario)
 
         try:    
@@ -73,6 +75,8 @@ class ControladorFuncionario():
     def excluir_funcionario(self):
         self.lista_funcionarios()
         nome_funcionario = self.__tela_funcionario.seleciona_funcionario()
+        if nome_funcionario == None:
+            return
         funcionario = self.pega_funcionario_por_nome(nome_funcionario)
         
         try:
