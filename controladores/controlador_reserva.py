@@ -15,7 +15,6 @@ class ControladorReserva():
     def __init__(self, controlador_sistema):
         self.__controlador_sistema = controlador_sistema
         self.__reserva_DAO = ReservaDAO()
-        # self.__total_reservas = []
         self.__total_reservas = ReservaDAO()
         self.__tela_reserva = TelaReserva()
 
@@ -61,10 +60,7 @@ class ControladorReserva():
 
             reserva = Reserva(id, cliente, funcionario, mesa)
             mesa.status = True
-            # self.__reservas.append(reserva)
             self.__reserva_DAO.add(reserva)
-            # self.__total_reservas.append(reserva)
-            # self.__reserva_DAO.add_total(reserva)
             self.__total_reservas.add(reserva)
           
         except (MesaNaoExistenteException, ClienteNaoExistenteException, FuncionarioNaoExistenteException, ReservaRepetidaException, CapacidadeDaMesaExcedidaException, NaoHaMesasDisponiveisException) as e:
@@ -75,7 +71,6 @@ class ControladorReserva():
         if len(self.__reserva_DAO.get_all()) == 0:
             self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
         dados_reservas = []
-        # for e in self.__reservas:
         for e in self.__reserva_DAO.get_all():
             dados_reservas.append({"nome_cliente": e.cliente.nome,
                                    "nome_funcionario": e.funcionario.nome,
@@ -92,7 +87,6 @@ class ControladorReserva():
       
         try:
             if (reserva is not None):
-                # self.__reservas.remove(reserva)
                 self.__reserva_DAO.remove(reserva.id)
                 self.lista_reservas()
                 reserva.mesa.status = False
@@ -129,7 +123,6 @@ class ControladorReserva():
 
     @property
     def total_reservas(self):
-        # return self.__total_reservas
         return self.__total_reservas.get_all()
     
     @property

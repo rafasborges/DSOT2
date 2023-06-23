@@ -71,7 +71,7 @@ class TelaReserva(Tela):
                 or len(cliente_cpf) != 11):
               raise ValueError
             self.close()
-            return {"id": id, "mesa_num": mesa_num, "cliente_cpf": cliente_cpf, "funcionario_nome": funcionario_nome}
+            return {"id": id, "mesa_num": mesa_num, "cliente_cpf": cliente_cpf, "funcionario_nome": funcionario_nome.upper()}
           except ValueError:
             sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas inteiros para o id e número da mesa e string para o nome do funcionário!", title = "ERRO")
             self.close()

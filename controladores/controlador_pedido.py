@@ -14,7 +14,6 @@ class ControladorPedido():
     self.__tela_pedido = TelaPedido()
 
   def pega_pedido_por_codigo(self, codigo: int):
-    # for pedido in self.__pedidos:
     for pedido in self.__pedido_DAO.get_all():
       if(int(pedido.codigo) == int(codigo)):
         return pedido
@@ -48,10 +47,7 @@ class ControladorPedido():
         lista.append(item)
 
       pedido = Pedido(codigo, reserva, lista)
-      # self.__pedidos.append(pedido)
       self.__pedido_DAO.add(pedido)
-      # self.__total_pedidos.append(pedido)
-      # self.__pedido_DAO.add_total(pedido)
       self.__total_pedidos.add(pedido)
 
     except (PedidoRepetidoException, ReservaNaoExistenteException, ItemNaoExistenteException) as e:
@@ -62,7 +58,6 @@ class ControladorPedido():
     if len(self.__pedido_DAO.get_all()) == 0:
        self.__tela_pedido.mostra_mensagem("ATENÇÃO: Lista de pedidos vazia")
     dados_pedidos = []
-    # for pedido in self.__pedidos:
     for pedido in self.__pedido_DAO.get_all():
         itens_pedido = ""
         for item in pedido.itens:
@@ -84,7 +79,6 @@ class ControladorPedido():
 
     try:
       if (pedido is not None):
-        # self.__pedidos.remove(pedido)
         self.__pedido_DAO.remove(pedido.codigo)
         self.lista_pedidos()
       else:
