@@ -7,7 +7,6 @@ class TelaMesa(Tela):
         self.__window = None
         self.init_opcoes()
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
@@ -19,15 +18,12 @@ class TelaMesa(Tela):
             opcao = 3
         if values['4']:
             opcao = 4
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
         if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
             opcao = 0
         self.close()
         return opcao
 
     def init_opcoes(self):
-        # sg.theme_previewer()
         sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('-------- MESAS ----------', font=("Helvica", 25))],
@@ -36,13 +32,11 @@ class TelaMesa(Tela):
             [sg.Radio('Alterar Mesa', "RD1", key='2')],
             [sg.Radio('Excluir Mesa', "RD1", key='3')],
             [sg.Radio('Listar Mesa', "RD1", key='4')],
-            [sg.Radio('Retornar', "RD1", key='0')], #  se aaga isso ele para de funcionar
+            [sg.Radio('Retornar', "RD1", key='0')], 
             [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_mesa(self):
         sg.ChangeLookAndFeel('TealMono')
         while True:
@@ -74,8 +68,6 @@ class TelaMesa(Tela):
                     sg.Popup("Dados incorretos, utilize apenas números positivos para número e capacidade!", title = "ERRO")
                     self.close()
 
-
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_dados_mesa(self, dados_mesa):
         sg.ChangeLookAndFeel('TealMono')
 
@@ -89,8 +81,6 @@ class TelaMesa(Tela):
         except KeyError as e:
             sg.Popup("Erro ao exibir dados da mesa: ", str(e))
 
-
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_mesa(self):
         sg.ChangeLookAndFeel('TealMono')
 

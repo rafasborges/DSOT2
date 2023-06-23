@@ -1,8 +1,6 @@
 from DAOs.dao import DAO
 from entidades.pessoa import Pessoa
 
-
-#cada entidade terá uma classe dessa, implementação bem simples.
 class PessoaDAO(DAO):
     def __init__(self):
         super().__init__('pessoa.pkl')

@@ -7,7 +7,6 @@ class TelaPedido(Tela):
         self.__window = None
         self.init_opcoes()
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
@@ -17,15 +16,12 @@ class TelaPedido(Tela):
             opcao = 2
         if values['3']:
             opcao = 3
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
         if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
             opcao = 0
         self.close()
         return opcao
 
     def init_opcoes(self):
-        # sg.theme_previewer()
         sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('-------- PEDIDOS ----------', font=("Helvica", 25))],
@@ -38,8 +34,6 @@ class TelaPedido(Tela):
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_pedido(self):
         sg.ChangeLookAndFeel('TealMono')
         while True:
@@ -73,7 +67,6 @@ class TelaPedido(Tela):
                     sg.Popup("Dados incorretos! Utilize apenas inteiros para o código e id da reserva!", title = "ERRO")
                     self.close()
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_dados_pedido(self, dados_pedido):
         try:
             string_todos_pedidos = ""
@@ -87,7 +80,6 @@ class TelaPedido(Tela):
         except KeyError as e:
             sg.Popup("Erro ao exibir dados do pedido: ", str(e))
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_pedido(self):
         sg.ChangeLookAndFeel('TealMono')
         while True:

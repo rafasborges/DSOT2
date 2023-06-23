@@ -6,7 +6,6 @@ class TelaFuncionario(Tela):
         self.__window = None
         self.init_opcoes()
 
-# fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
@@ -20,15 +19,12 @@ class TelaFuncionario(Tela):
           opcao = 4
         if values['5']:
           opcao = 5
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
         if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
           opcao = 0
         self.close()
         return opcao
 
     def init_opcoes(self):
-      # sg.theme_previewer()
       sg.ChangeLookAndFeel('TealMono')
       layout = [
         [sg.Text('-------- FUNCIONÁRIOS ----------', font=("Helvica", 25))],
@@ -43,8 +39,6 @@ class TelaFuncionario(Tela):
       ]
       self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_funcionario(self):
         sg.ChangeLookAndFeel('TealMono')
         while True:
@@ -78,7 +72,6 @@ class TelaFuncionario(Tela):
                 sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números decimais positivos para o salário!", title = "ERRO")
             self.close()
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_funcionario(self, dados_funcionario):
         try:
             string_todos_funcionarios = ""
@@ -91,8 +84,7 @@ class TelaFuncionario(Tela):
         except KeyError as e:
             sg.Popup("Erro ao exibir dados de funcionários: ", str(e))
 
-      #self.__window = sg.Window('Lista de Funcionários').Layout(layout)
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+
     def seleciona_funcionario(self):
       sg.ChangeLookAndFeel('TealMono')
 
@@ -131,31 +123,3 @@ class TelaFuncionario(Tela):
     def open(self):
       button, values = self.__window.Read()
       return button, values
-
-
-    """
-    button, values = self.open()
-          if len(values['nome']) > 0:
-              nome = str(values['nome'])
-          if len(values['cpf']) > 0:
-              cpf = str(values['cpf'])
-          if len(values['salario']) > 0:
-            salario = float(values['salario'])
-          else:
-              nome, cpf, salario = "", "", 900
-
-          variavel = values.get('900', 'insight')
-
-          if variavel != "insight":
-              if variavel or button in (None, 'Voltar'):
-                  opcao = 0
-              # self.close()
-              return opcao
-          print(values)
-
-          if button != "Voltar" and ((self.checa_valor(nome) == True) or
-                    (not isinstance(salario, (int, float)) or
-                    len(cpf) != 11) or
-                    salario < 0):
-                    raise ValueError
-    """

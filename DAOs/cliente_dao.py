@@ -1,7 +1,6 @@
 from DAOs.dao import DAO
 from entidades.cliente import Cliente
 
-#cada entidade terá uma classe dessa, implementação bem simples.
 class ClienteDAO(DAO):
     def __init__(self):
         super().__init__('cliente.pkl')
