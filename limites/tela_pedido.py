@@ -54,28 +54,14 @@ class TelaPedido(Tela):
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
                 button, values = self.open()
-                print(button, values)
-                if len(values['codigo']) > 0:
-                    codigo = int(values['codigo'])
-                if len(values['id_reserva']) > 0:
-                    id_reserva = int(values['id_reserva'])
-                # if values['cod_itens'] is not None:
-                #     cod_itens = values['cod_itens']
-                #     lista_itens = [int(numero) for numero in cod_itens.split(",")]
-                else:
-                    codigo, id_reserva, lista_itens = 0, 0, []
-                print(button, values)
-                # if len(values['codigo_itens']) > 0:
-                #     cod_itens = values['cod_itens']
-                #     lista_itens = [int(numero) for numero in cod_itens.split(",")]
+                if button in [sg.WIN_CLOSED, 'Voltar']:
+                    self.__window.close()
+                    return None
+
+                codigo = int(values['codigo'])
+                id_reserva = int(values['id_reserva'])
                 cod_itens = values['cod_itens']
                 lista_itens = [int(numero) for numero in cod_itens.split(",")]
-                
-                variavel = values.get('0', 'insight')
-                if variavel != 'insight':
-                    if variavel or button in (None, 'Voltar'):
-                        opcao = 0
-                    return opcao
                     
                 if button != 'Voltar' and ((not isinstance(codigo, int)) or
                     (not isinstance(id_reserva, int))):

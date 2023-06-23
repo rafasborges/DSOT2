@@ -28,6 +28,8 @@ class ControladorPedido():
     self.__controlador_sistema.controlador_itens_cardapio.lista_itens_cardapio_formatado()
 
     dados_pedido = self.__tela_pedido.pega_dados_pedido()
+    if dados_pedido == None:
+      return
     codigo = dados_pedido["codigo"]
     id_reserva = dados_pedido["id_reserva"] 
     lista_itens = dados_pedido["lista_itens"]

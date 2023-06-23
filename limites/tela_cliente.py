@@ -108,11 +108,14 @@ class TelaCliente(Tela):
                     [sg.Text('-------- SELECIONAR CLIENTE ----------', font=("Helvica", 25))],
                     [sg.Text('Digite o CPF do cliente que deseja selecionar:', font=("Helvica", 15))],
                     [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-                    [sg.Button('Cancelar'), sg.Cancel('Confirmar')]
+                    [sg.Cancel('Voltar'), sg.Button('Confirmar')]
                 ]
                 self.__window = sg.Window('Seleciona cliente').Layout(layout)
 
                 button, values = self.open()
+                if button in [sg.WIN_CLOSED, 'Voltar']:
+                    self.__window.close()
+                    return None
                 cpf = str(values['cpf'])
                 if not isinstance(cpf, str):
                     raise ValueError

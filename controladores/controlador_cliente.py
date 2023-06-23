@@ -60,8 +60,8 @@ class ControladorCliente():
         try:
             if(cliente is not None):
                 novos_dados_cliente = self.__tela_cliente.pega_dados_cliente()
-                # if novos_dados_cliente == None or novos_dados_cliente['cpf'] == "":
-                #     return
+                if novos_dados_cliente['cpf'] == None:
+                    return
                 cliente.nome = novos_dados_cliente["nome"]
                 cliente.cpf = novos_dados_cliente["cpf"]
                 cliente.idade = novos_dados_cliente["idade"]
