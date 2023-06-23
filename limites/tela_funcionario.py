@@ -46,47 +46,37 @@ class TelaFuncionario(Tela):
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_funcionario(self):
-      sg.ChangeLookAndFeel('TealMono')
-      while True:
-        try:
-          layout = [
-            [sg.Text('-------- DADOS FUNCIONÁRIOS ----------', font=("Helvica", 25))],
-            [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
-            [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-            [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
-            [sg.Cancel('Voltar'), sg.Button('Confirmar')]
-          ]
-          self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
+        sg.ChangeLookAndFeel('TealMono')
+        while True:
+            try:
+                layout = [
+                [sg.Text('-------- DADOS FUNCIONÁRIOS ----------', font=("Helvica", 25))],
+                [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
+                [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
+                [sg.Text('Salário:', size=(15, 1)), sg.InputText('', key='salario')],
+                [sg.Cancel('Voltar'), sg.Button('Confirmar')]
+              ]
+                self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-          button, values = self.open()
-          if len(values['nome']) > 0:
-              nome = str(values['nome'])
-          if len(values['cpf']) > 0:
-              cpf = str(values['cpf'])
-          if len(values['salario']) > 0:
-            salario = float(values['salario'])
-          else:
-              nome, cpf, salario = "", "", 900
+                button, values = self.open()
+                if button in [sg.WIN_CLOSED, 'Voltar']:
+                    self.__window.close()
+                    return None
+                nome = str(values['nome'])
 
-          variavel = values.get('900', 'insight')
+                cpf = str(values['cpf'])
+                salario = float(values['salario'])
 
-          if variavel != "insight":
-              if variavel or button in (None, 'Voltar'):
-                  opcao = 0
-              # self.close()
-              return opcao
-          print(values)
-
-          if button != "Voltar" and ((self.checa_valor(nome) == True) or
-                    (not isinstance(salario, (int, float)) or
-                    len(cpf) != 11) or
-                    salario < 0):
-                    raise ValueError
-          self.close()
-          return {"nome": nome, "cpf": cpf, "salario": salario}
-        except ValueError:
-          sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números decimais positivos para o salário!", title = "ERRO")
-        self.close()
+                if ((self.checa_valor(nome) == True) or
+                        (not isinstance(salario, (int, float)) or
+                        len(cpf) != 11) or
+                        salario < 0):
+                        raise ValueError
+                self.close()
+                return {"nome": nome, "cpf": cpf, "salario": salario}
+            except ValueError:
+                sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números decimais positivos para o salário!", title = "ERRO")
+            self.close()
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def mostra_funcionario(self, dados_funcionario):
@@ -147,3 +137,31 @@ class TelaFuncionario(Tela):
     def open(self):
       button, values = self.__window.Read()
       return button, values
+
+
+    """
+    button, values = self.open()
+          if len(values['nome']) > 0:
+              nome = str(values['nome'])
+          if len(values['cpf']) > 0:
+              cpf = str(values['cpf'])
+          if len(values['salario']) > 0:
+            salario = float(values['salario'])
+          else:
+              nome, cpf, salario = "", "", 900
+
+          variavel = values.get('900', 'insight')
+
+          if variavel != "insight":
+              if variavel or button in (None, 'Voltar'):
+                  opcao = 0
+              # self.close()
+              return opcao
+          print(values)
+
+          if button != "Voltar" and ((self.checa_valor(nome) == True) or
+                    (not isinstance(salario, (int, float)) or
+                    len(cpf) != 11) or
+                    salario < 0):
+                    raise ValueError
+    """

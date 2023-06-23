@@ -101,6 +101,10 @@ class TelaPedido(Tela):
                 self.__window = sg.Window('Seleciona pedido').Layout(layout)
 
                 button, values = self.open()
+                if button in [sg.WIN_CLOSED, 'Voltar']:
+                    self.__window.close()
+                    return None
+
                 codigo = int(values['codigo'])
                 if not isinstance(codigo, int):
                     raise ValueError

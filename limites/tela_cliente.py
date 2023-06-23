@@ -56,25 +56,35 @@ class TelaCliente(Tela):
                 ]
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
+               # button, values = self.open()
                 button, values = self.open()
-                if len(values['nome']) > 0:
-                    nome = str(values['nome'])
-                if len(values['cpf']) > 0:
-                    cpf = str(values['cpf'])
-                if len(values['num_convidados']) > 0:
-                    num_convidados = int(values['num_convidados'])
-                if len(values['idade']) > 0:
-                    idade = int(values['idade'])
-                else:
-                    nome, cpf, num_convidados, idade = '', '', 900, 900
+                if button in [sg.WIN_CLOSED, 'Voltar']:
+                    self.__window.close()
+                    return None
 
-                variavel = values.get('', 'insight')
-                if variavel != 'insight':
-                    if variavel or button in (None, 'Voltar'):
-                        opcao = 0
-                    return opcao
-                
-                if button != 'Voltar' and ((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
+                nome = str(values['nome'])
+                cpf = str(values['cpf'])
+                num_convidados = int(values['num_convidados'])
+                idade = int(values['idade'])
+                #if len(values['nome']) > 0:
+                   # nome = str(values['nome'])
+              #  if len(values['cpf']) > 0:
+                   # cpf = str(values['cpf'])
+                #if len(values['num_convidados']) > 0:
+                  #  num_convidados = int(values['num_convidados'])
+                #if len(values['idade']) > 0:
+                    #idade = int(values['idade'])
+               # else:
+                    #nome, cpf, num_convidados, idade = '', '', 900, 900
+
+                #variavel = values.get('', 'insight')
+                #if variavel != 'insight':
+                  #  if variavel or button in (None, 'Voltar'):
+                    #    opcao = 0
+                   # return opcao
+
+                #button != 'Voltar' and
+                if ((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
                     raise ValueError
                 self.close()
                 return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
