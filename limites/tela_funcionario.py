@@ -83,7 +83,7 @@ class TelaFuncionario(Tela):
                     salario < 0):
                     raise ValueError
           self.close()
-          return {"nome": nome.upper(), "cpf": cpf, "salario": salario}
+          return {"nome": nome, "cpf": cpf, "salario": salario}
         except ValueError:
           sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números decimais positivos para o salário!", title = "ERRO")
         self.close()
@@ -112,17 +112,17 @@ class TelaFuncionario(Tela):
             [sg.Text('-------- SELECIONAR FUNCIONÁRIO ----------', font=("Helvica", 25))],
             [sg.Text('Digite o nome do funcionario que deseja selecionar:', font=("Helvica", 15))],
             [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
-            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
+            [sg.Cancel('Voltar'), sg.Button('Confirmar')]
           ]
           self.__window = sg.Window('Seleciona funcionário').Layout(layout)
 
           button, values = self.open()
           if len(values['nome']) > 0:
-              nome = int(values['nome'])
+              nome = str(values['nome'])
           else:
               nome = " "
 
-          variavel = values.get('0', 'insight')
+          variavel = values.get(' ', 'insight')
 
           if variavel != "insight":
               if variavel or button in (None, 'Voltar'):

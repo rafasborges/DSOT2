@@ -6,7 +6,7 @@ import pickle
 class ReservaDAO(DAO):
     def __init__(self):
         super().__init__('reservas.pkl')
-        self.__total_reservas = []
+        super().__init__('total_reservas.pkl')
         
 
     def add(self, reserva: Reserva):
@@ -24,14 +24,3 @@ class ReservaDAO(DAO):
     def remove(selfself, key:int):
         if(isinstance(key, int)):
             return super().remove(key)
-    
-    def add_total(self, reserva: Reserva):
-        if((reserva is not None) and isinstance(reserva, Reserva) and isinstance(reserva.id, int)):
-            self.__total_reservas.append(reserva)
-            arquivo = open("total_reservas.pickle", "wb")
-            pickle.dump(self.__total_reservas, arquivo)
-            arquivo.close()
-    
-    @property
-    def total_reservas(self):
-        return self.__total_reservas

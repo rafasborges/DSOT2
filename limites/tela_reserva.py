@@ -126,7 +126,7 @@ class TelaReserva(Tela):
             self.close()
     
     def mostra_ganho_reserva(self, id_reserva, total):
-      sg.Popup("Valor total da reserva " + str(id_reserva) + ": R$ " + str(total))
+      sg.Popup(("Valor total da reserva " + str(id_reserva) + ": R$ " + str(total)), title= 'Total')
 
     def mostra_mensagem(self, msg):
         sg.popup("", msg, title='')

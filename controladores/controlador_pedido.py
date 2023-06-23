@@ -13,6 +13,7 @@ class ControladorPedido():
     # self.__pedidos = []
     # self.__total_pedidos = []
     self.__tela_pedido = TelaPedido()
+    self.__total_pedidos = PedidoDAO()
 
   def pega_pedido_por_codigo(self, codigo: int):
     # for pedido in self.__pedidos:
@@ -50,7 +51,8 @@ class ControladorPedido():
       # self.__pedidos.append(pedido)
       self.__pedido_DAO.add(pedido)
       # self.__total_pedidos.append(pedido)
-      self.__pedido_DAO.add_total(pedido)
+      # self.__pedido_DAO.add_total(pedido)
+      self.__total_pedidos.add(pedido)
 
     except (PedidoRepetidoException, ReservaNaoExistenteException, ItemNaoExistenteException) as e:
         self.__tela_pedido.mostra_mensagem(str(e))
@@ -108,7 +110,7 @@ class ControladorPedido():
 
   @property
   def total_pedidos(self):
-    return self.__pedido_DAO.total_pedidos
+    return self.__total_pedidos.get_all()
   
   @property
   def pedidos(self):

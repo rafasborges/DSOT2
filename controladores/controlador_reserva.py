@@ -16,6 +16,7 @@ class ControladorReserva():
         self.__controlador_sistema = controlador_sistema
         self.__reserva_DAO = ReservaDAO()
         # self.__total_reservas = []
+        self.__total_reservas = ReservaDAO()
         self.__tela_reserva = TelaReserva()
 
     def pega_reserva_por_id(self, id: int):
@@ -63,7 +64,8 @@ class ControladorReserva():
             # self.__reservas.append(reserva)
             self.__reserva_DAO.add(reserva)
             # self.__total_reservas.append(reserva)
-            self.__reserva_DAO.add_total(reserva)
+            # self.__reserva_DAO.add_total(reserva)
+            self.__total_reservas.add(reserva)
           
         except (MesaNaoExistenteException, ClienteNaoExistenteException, FuncionarioNaoExistenteException, ReservaRepetidaException, CapacidadeDaMesaExcedidaException, NaoHaMesasDisponiveisException) as e:
             self.__tela_reserva.mostra_mensagem(str(e))
@@ -106,7 +108,7 @@ class ControladorReserva():
         for pedido in pedidos:
             for item in pedido.itens:
                 total += int(item.preco)
-            self.__tela_reserva.mostra_ganho_reserva(id_reserva, total)
+        self.__tela_reserva.mostra_ganho_reserva(id_reserva, total)
 
     def retornar(self):
         self.__controlador_sistema.abre_tela()
@@ -121,7 +123,7 @@ class ControladorReserva():
     @property
     def total_reservas(self):
         # return self.__total_reservas
-        return self.__reserva_DAO.total_reservas
+        return self.__total_reservas.get_all()
     
     @property
     def reservas(self):
