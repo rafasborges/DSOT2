@@ -57,7 +57,7 @@ class TelaMesa(Tela):
 
             
                 button, values = self.open()
-                print(button, values)
+                # print(button, values)
                 if len(values['numero']) > 0:
                     numero = int(values['numero'])
                 if len(values['capacidade']) > 0:
@@ -65,7 +65,7 @@ class TelaMesa(Tela):
                 else:
                     numero, capacidade = 0, 900
                 #tentando fazer com que volte
-                print(button, values)
+                # print(button, values)
 
                 variavel = values.get('0', 'insight')
 
@@ -73,7 +73,7 @@ class TelaMesa(Tela):
                     if variavel or button in (None, 'Voltar'):
                         opcao = 0
                     return opcao
-                print(values)
+                # print(values)
                 if button != "Voltar" and ((not isinstance(numero, int) or
                         not isinstance(capacidade, int) or
                         numero < 0 or capacidade < 0)):
@@ -100,36 +100,6 @@ class TelaMesa(Tela):
         except KeyError as e:
             sg.Popup("Erro ao exibir dados da mesa: ", str(e))
 
-        #     button, values = self.open()
-        #     if len(values['numero']) > 0:
-        #         numero = int(values['numero'])
-        #     if len(values['capacidade']) > 0:
-        #         capacidade = int(values['capacidade'])
-        #     else:
-        #         numero, capacidade = 0, 900
-        #         # tentando fazer com que volte
-        #     print(button, values)
-
-        #     variavel = values.get('0', 'insight')
-
-        #     if variavel != "insight":
-        #         if variavel or button in (None, 'Voltar'):
-        #             opcao = 0
-        #         # self.close()
-        #         return opcao
-        #     print(values)
-        #     if button != "Voltar" and ((not isinstance(numero, int) or
-        #                                 not isinstance(capacidade, int) or
-        #                                 numero < 0 or capacidade < 0)):
-        #         raise ValueError
-
-        #     self.close()
-        #     return {"numero": numero, "capacidade": capacidade}
-
-        # except ValueError:
-        #     sg.Popup("Dados incorretos, utilize apenas números positivos para número e capacidade!", title="ERRO")
-        #     self.close()
-
 
     # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_mesa(self):
@@ -152,10 +122,6 @@ class TelaMesa(Tela):
                     num_mesa = 0
 
                 variavel = values.get('0', 'insight')
-                #if not isinstance(num_mesa, int):
-                   # raise ValueError
-                #self.close()
-                #return num_mesa
 
                 if variavel != "insight":
                     if variavel or button in (None, 'Voltar'):

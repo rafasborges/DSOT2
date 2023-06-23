@@ -133,3 +133,9 @@ class ControladorReserva():
     @property
     def reservas(self):
         return self.__reserva_DAO.get_all()
+    
+    def apagar_reservas(self):
+        return self.__reserva_DAO.clear()
+    
+    def apagar_total_reservas(self):
+        return self.__total_reservas.clear()

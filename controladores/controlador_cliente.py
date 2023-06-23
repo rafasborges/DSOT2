@@ -60,6 +60,8 @@ class ControladorCliente():
         try:
             if(cliente is not None):
                 novos_dados_cliente = self.__tela_cliente.pega_dados_cliente()
+                # if novos_dados_cliente == None or novos_dados_cliente['cpf'] == "":
+                #     return
                 cliente.nome = novos_dados_cliente["nome"]
                 cliente.cpf = novos_dados_cliente["cpf"]
                 cliente.idade = novos_dados_cliente["idade"]
@@ -107,3 +109,6 @@ class ControladorCliente():
     @property
     def cliente(self):
         return self.__cliente_DAO.get_all()
+    
+    def apagar_clientes(self):
+        return self.__cliente_DAO.clear()

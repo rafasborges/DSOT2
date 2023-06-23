@@ -109,12 +109,12 @@ class ControladorSistema:
         sg.Popup("Item mais pedido: {}".format(item_mais_pedido))
     
     def finalizar_dia(self):
-        self.__controlador_clientes.cliente.clear()
-        self.__controlador_pedidos.pedidos.clear()
-        self.__controlador_pedidos.total_pedidos.clear()
-        self.__controlador_reservas.reservas.clear()
-        self.__controlador_reservas.total_reservas.clear()
-        sg.Popup("---------- DIA FINALIZADO ----------", title = 'Fim do dia')      
+        self.__controlador_clientes.apagar_clientes()
+        self.__controlador_pedidos.apagar_pedidos()
+        self.__controlador_pedidos.apagar_total_pedidos()
+        self.__controlador_reservas.apagar_reservas()
+        self.__controlador_reservas.apagar_total_reservas()
+        sg.Popup("---------- DIA FINALIZADO ----------", title = 'FIM')      
 
     def abre_tela(self):
         lista_opcoes = {1: self.cadastra_mesas, 2: self.cadastra_itens_cardapio, 3: self.cadastra_funcionarios,

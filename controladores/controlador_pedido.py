@@ -119,3 +119,9 @@ class ControladorPedido():
   @property
   def pedidos(self):
     return self.__pedido_DAO.get_all()
+
+  def apagar_pedidos(self):
+    return self.__pedido_DAO.clear()
+  
+  def apagar_total_pedidos(self):
+    return self.__total_pedidos.clear()
