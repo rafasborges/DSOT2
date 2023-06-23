@@ -50,7 +50,7 @@ class TelaCliente(Tela):
                     [sg.Text('-------- DADOS CLIENTE ----------', font=("Helvica", 25))],
                     [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
                     [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-                    [sg.Text('Número de convidados:', size=(16, 1)), sg.InputText('', key='num_convidados', size=(44, 1))],
+                    [sg.Text('Número de convidados:', size=(17, 1)), sg.InputText('', key='num_convidados', size=(43, 1))],
                     [sg.Text('Idade:', size=(15, 1)), sg.InputText('', key='idade')],
                     [sg.Cancel('Voltar'), sg.Button('Confirmar')]
                 ]

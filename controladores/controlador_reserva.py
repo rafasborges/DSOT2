@@ -94,6 +94,11 @@ class ControladorReserva():
                 self.__reserva_DAO.remove(reserva.id)
                 self.lista_reservas()
                 reserva.mesa.status = False
+                lista = list(self.__controlador_sistema.controlador_pedidos.pedidos)
+                for ped in lista:
+                    if ped.reserva.id == reserva.id:
+                        self.__controlador_sistema.controlador_pedidos.excluir_pedido_com_base_na_reserva(ped.codigo)
+                lista = []
             else:
                 raise ReservaNaoExistenteException(id_reserva)
         except ReservaNaoExistenteException as e:

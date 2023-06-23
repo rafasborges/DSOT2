@@ -28,7 +28,7 @@ class TelaPedido(Tela):
         # sg.theme_previewer()
         sg.ChangeLookAndFeel('TealMono')
         layout = [
-            [sg.Text('-------- RESERVAS ----------', font=("Helvica", 25))],
+            [sg.Text('-------- PEDIDOS ----------', font=("Helvica", 25))],
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
             [sg.Radio('Incluir Pedido', "RD1", key='1')],
             [sg.Radio('Listar Pedido', "RD1", key='2')],
@@ -46,19 +46,34 @@ class TelaPedido(Tela):
             try:
                 layout = [
                     [sg.Text('-------- DADOS PEDIDO ----------', font=("Helvica", 25))],
-                    [sg.Text('Código do Pedido:', size=(15, 1)), sg.InputText('', key='codigo')],
-                    [sg.Text('Id da Reserva que efetuou o Pedido:', size=(15, 1)), sg.InputText('', key='id_reserva')],
-                    [sg.Text('Código dos itens que deseja selecionar (separados por vírgula):', size=(15, 1)), sg.InputText('', key='cod_itens')],
-                    [sg.Button('Voltar'), sg.Cancel('Confirmar')]
+                    [sg.Text('Código do Pedido:', size=(15, 1)), sg.InputText('', key='codigo', size=(51, 1))],
+                    [sg.Text('Id da Reserva que efetuou o Pedido:', size=(26, 1)), sg.InputText('', key='id_reserva', size=(38, 1))],
+                    [sg.Text('Código dos itens que deseja selecionar (separados por vírgula):', size=(46, 1)), sg.InputText('', key='cod_itens', size=(15, 1))],
+                    [sg.Cancel('Voltar'), sg.Button('Confirmar')]
                 ]
                 self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
                 button, values = self.open()
-                codigo = int(values['codigo'])
-                id_reserva = int(values['id_reserva'])
+                if len(values['codigo']) > 0:
+                    codigo = int(values['codigo'])
+                if len(values['id_reserva']) > 0:
+                    id_reserva = int(values['id_reserva'])
+                else:
+                    codigo, id_reserva= 0, 0
+                # if len(values['codigo_itens']) > 0:
+                #     cod_itens = values['cod_itens']
+                #     lista_itens = [int(numero) for numero in cod_itens.split(",")]
+                
                 cod_itens = values['cod_itens']
                 lista_itens = [int(numero) for numero in cod_itens.split(",")]
-                if ((not isinstance(codigo, int)) or
+                
+                variavel = values.get(0, 'insight')
+                if variavel != 'insight':
+                    if variavel or button in (None, 'Voltar'):
+                        opcao = 0
+                    return opcao
+                    
+                if button != 'Voltar' or ((not isinstance(codigo, int)) or
                     (not isinstance(id_reserva, int))):
                     raise ValueError
                 self.close()

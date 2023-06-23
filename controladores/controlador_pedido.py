@@ -90,6 +90,10 @@ class ControladorPedido():
     except PedidoNaoExistenteException as e:
       self.__tela_pedido.mostra_mensagem(e)
     
+  def excluir_pedido_com_base_na_reserva(self, codigo):
+    self.__pedido_DAO.remove(codigo)
+    self.lista_pedidos()
+    
 
   def pega_pedido_por_id_reserva(self, id_reserva: int):
      lista = []

@@ -109,7 +109,7 @@ class ControladorSistema:
         sg.Popup("Item mais pedido: {}".format(item_mais_pedido))
     
     def finalizar_dia(self):
-        self.__controlador_clientes.clientes.clear()
+        self.__controlador_clientes.cliente.clear()
         self.__controlador_pedidos.pedidos.clear()
         self.__controlador_pedidos.total_pedidos.clear()
         self.__controlador_reservas.reservas.clear()
