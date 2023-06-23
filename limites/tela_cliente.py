@@ -35,7 +35,7 @@ class TelaCliente(Tela):
         [sg.Radio('Alterar Cliente', "RD1", key='2')],
         [sg.Radio('Listar Cliente', "RD1", key='3')],
         [sg.Radio('Excluir Cliente', "RD1", key='4')],
-        #[sg.Radio('Retornar', "RD1", key='0')],
+        [sg.Radio('Retornar', "RD1", key='0')],
         [sg.Button('Voltar'), sg.Cancel('Confirmar')]
       ]
       self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
