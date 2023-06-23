@@ -64,7 +64,7 @@ class TelaPedido(Tela):
                 lista_itens = [int(numero) for numero in cod_itens.split(",")]
                     
                 if button != 'Voltar' and ((not isinstance(codigo, int)) or
-                    (not isinstance(id_reserva, int))):
+                                            (not isinstance(id_reserva, int))):
                     raise ValueError
                 self.close()
                 return {"codigo": codigo, "id_reserva": id_reserva, "lista_itens": lista_itens}
