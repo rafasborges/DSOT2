@@ -73,7 +73,7 @@ class TelaFuncionario(Tela):
                         salario < 0):
                         raise ValueError
                 self.close()
-                return {"nome": nome, "cpf": cpf, "salario": salario}
+                return {"nome": nome.upper(), "cpf": cpf, "salario": salario}
             except ValueError:
                 sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números decimais positivos para o salário!", title = "ERRO")
             self.close()
@@ -116,7 +116,7 @@ class TelaFuncionario(Tela):
           if not isinstance(nome, str):
             raise ValueError
           self.close()
-          return nome
+          return nome.upper()
 
         except ValueError:
           sg.Popup("Insira um valor válido!", title = "ERRO")
