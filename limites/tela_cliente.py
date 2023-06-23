@@ -35,7 +35,7 @@ class TelaCliente(Tela):
         [sg.Radio('Alterar Cliente', "RD1", key='2')],
         [sg.Radio('Listar Cliente', "RD1", key='3')],
         [sg.Radio('Excluir Cliente', "RD1", key='4')],
-        [sg.Radio('Retornar', "RD1", key='0')],
+        #[sg.Radio('Retornar', "RD1", key='0')],
         [sg.Button('Voltar'), sg.Cancel('Confirmar')]
       ]
       self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
@@ -66,24 +66,7 @@ class TelaCliente(Tela):
                 cpf = str(values['cpf'])
                 num_convidados = int(values['num_convidados'])
                 idade = int(values['idade'])
-                #if len(values['nome']) > 0:
-                   # nome = str(values['nome'])
-              #  if len(values['cpf']) > 0:
-                   # cpf = str(values['cpf'])
-                #if len(values['num_convidados']) > 0:
-                  #  num_convidados = int(values['num_convidados'])
-                #if len(values['idade']) > 0:
-                    #idade = int(values['idade'])
-               # else:
-                    #nome, cpf, num_convidados, idade = '', '', 900, 900
 
-                #variavel = values.get('', 'insight')
-                #if variavel != 'insight':
-                  #  if variavel or button in (None, 'Voltar'):
-                    #    opcao = 0
-                   # return opcao
-
-                #button != 'Voltar' and
                 if ((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
                     raise ValueError
                 self.close()
@@ -145,3 +128,23 @@ class TelaCliente(Tela):
         button, values = self.__window.Read()
         return button, values
 
+    """
+                    #if len(values['nome']) > 0:
+                   # nome = str(values['nome'])
+              #  if len(values['cpf']) > 0:
+                   # cpf = str(values['cpf'])
+                #if len(values['num_convidados']) > 0:
+                  #  num_convidados = int(values['num_convidados'])
+                #if len(values['idade']) > 0:
+                    #idade = int(values['idade'])
+               # else:
+                    #nome, cpf, num_convidados, idade = '', '', 900, 900
+
+                #variavel = values.get('', 'insight')
+                #if variavel != 'insight':
+                  #  if variavel or button in (None, 'Voltar'):
+                    #    opcao = 0
+                   # return opcao
+
+                #button != 'Voltar' and
+    """

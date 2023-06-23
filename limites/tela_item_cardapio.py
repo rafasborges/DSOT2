@@ -54,32 +54,19 @@ class TelaItemCardapio(Tela):
         self.__window = sg.Window('Sistema de livros').Layout(layout)
 
         button, values = self.open()
-        if len(values['nome']) > 0:
-          nome = str(values['nome'])
-        if len(values['descricao']) > 0:
-          descricao = str(values['descricao'])
-        if len(values['codigo_item']) > 0:
-          codigo_item = int(values['codigo_item'])
-        if len(values['preco']) > 0:
-          preco = float(values['preco'])
-        else:
-          nome, descricao, codigo_item, preco = "", "", 900, 900
+        if button in [sg.WIN_CLOSED, 'Voltar']:
+          self.__window.close()
+          return None
 
-        variavel = values.get('900', 'insight')
-
-        if variavel != "insight":
-          if variavel or button in (None, 'Voltar'):
-            opcao = 0
-          # self.close()
-          return opcao
-        print(values)
-
-        if button != "Voltar" and ((self.checa_valor(nome) == True) or
-                  (self.checa_valor(descricao) == True) or
-                  not isinstance(codigo_item, int) or
-                  not isinstance(preco, float)):
-             raise ValueError
-
+        nome = str(values['nome'])
+        descricao = str(values['descricao'])
+        codigo_item = int(values['codigo_item'])
+        preco = float(values['preco'])
+        if ((self.checa_valor(nome) == True) or
+                                   (self.checa_valor(descricao) == True) or
+                                   not isinstance(codigo_item, int) or
+                                   not isinstance(preco, float)):
+          raise ValueError
         self.close()
         return {"nome": nome.upper(), "descricao": descricao.upper(), "codigo_item": codigo_item, "preco": preco}
       except ValueError:
@@ -126,7 +113,61 @@ class TelaItemCardapio(Tela):
         self.__window = sg.Window('Seleciona item').Layout(layout)
 
         button, values = self.open()
+        if button in [sg.WIN_CLOSED, 'Voltar']:
+          self.__window.close()
+          return None
+        codigo = int(values['codigo_item'])
+
+                
+        if (not isinstance(codigo, int)):
+            raise ValueError
+        self.close()
+        return {'codigo': codigo}
+      except ValueError:
+        sg.Popup("Código do item inválido. O código deve ser um valor inteiro.", title = "ERRO")
+        self.close()
+
+  def mostra_mensagem(self, msg):
+    sg.popup("", msg, title='')
+
+  def close(self):
+    self.__window.Close()
+
+  def open(self):
+    button, values = self.__window.Read()
+    return button, values
+
+  """
+    button, values = self.open()
+        if len(values['nome']) > 0:
+          nome = str(values['nome'])
+        if len(values['descricao']) > 0:
+          descricao = str(values['descricao'])
         if len(values['codigo_item']) > 0:
+          codigo_item = int(values['codigo_item'])
+        if len(values['preco']) > 0:
+          preco = float(values['preco'])
+        else:
+          nome, descricao, codigo_item, preco = "", "", 900, 900
+
+        variavel = values.get('900', 'insight')
+
+        if variavel != "insight":
+          if variavel or button in (None, 'Voltar'):
+            opcao = 0
+          # self.close()
+          return opcao
+        print(values)
+
+        if button != "Voltar" and ((self.checa_valor(nome) == True) or
+                  (self.checa_valor(descricao) == True) or
+                  not isinstance(codigo_item, int) or
+                  not isinstance(preco, float)):
+             raise ValueError
+  """
+
+  """
+          if len(values['codigo_item']) > 0:
           codigo = int(values['codigo_item'])
         else:
           codigo = 0
@@ -144,13 +185,4 @@ class TelaItemCardapio(Tela):
       except ValueError:
         sg.Popup("Código do item inválido. O código deve ser um valor inteiro.", title = "ERRO")
         self.close()
-
-  def mostra_mensagem(self, msg):
-    sg.popup("", msg, title='')
-
-  def close(self):
-    self.__window.Close()
-
-  def open(self):
-    button, values = self.__window.Read()
-    return button, values
+  """
