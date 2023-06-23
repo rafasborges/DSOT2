@@ -10,10 +10,8 @@ class ControladorPedido():
   def __init__(self, controlador_sistema):
     self.__controlador_sistema = controlador_sistema
     self.__pedido_DAO= PedidoDAO()
-    # self.__pedidos = []
-    # self.__total_pedidos = []
-    self.__tela_pedido = TelaPedido()
     self.__total_pedidos = PedidoDAO()
+    self.__tela_pedido = TelaPedido()
 
   def pega_pedido_por_codigo(self, codigo: int):
     # for pedido in self.__pedidos:
@@ -80,6 +78,8 @@ class ControladorPedido():
   def excluir_pedido(self):
     self.lista_pedidos()
     codigo = self.__tela_pedido.seleciona_pedido()
+    if codigo == None:
+      return
     pedido = self.pega_pedido_por_codigo(int(codigo))
 
     try:

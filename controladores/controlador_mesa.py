@@ -37,6 +37,8 @@ class ControladorMesa():
     def alterar_mesa(self):
         self.lista_mesas()
         numero_mesa = self.__tela_mesa.seleciona_mesa()
+        if numero_mesa == None:
+            return
         mesa = self.pega_mesa_por_numero(numero_mesa)
 
         try:
@@ -79,6 +81,8 @@ class ControladorMesa():
     def excluir_mesa(self):
         self.lista_mesas()
         numero_mesa = self.__tela_mesa.seleciona_mesa()
+        if numero_mesa == None:
+            return
         mesa = self.pega_mesa_por_numero(numero_mesa)
         try:
             if (mesa is not None):

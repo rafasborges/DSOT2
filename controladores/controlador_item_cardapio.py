@@ -38,6 +38,8 @@ class ControladorItemCardapio():
     def alterar_item(self):
         self.lista_itens_cardapio()
         cod_item = self.__tela_item_cardapio.seleciona_item()
+        if cod_item == None:
+            return
         item = self.pega_item_por_cod(cod_item)
 
         try:
@@ -77,6 +79,8 @@ class ControladorItemCardapio():
     def excluir_item(self):
         self.lista_itens_cardapio()
         cod_item = self.__tela_item_cardapio.seleciona_item()
+        if cod_item == None:
+            return
         item = self.pega_item_por_cod(cod_item)
 
         try:
