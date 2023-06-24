@@ -10,6 +10,7 @@ class TelaMesa(Tela):
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
+        opcao = 0
         if values['1']:
             opcao = 1
         if values['2']:
@@ -18,8 +19,8 @@ class TelaMesa(Tela):
             opcao = 3
         if values['4']:
             opcao = 4
-        if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
-            opcao = 0
+        # if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
+        #     opcao = 0
         self.close()
         return opcao
 
@@ -32,8 +33,8 @@ class TelaMesa(Tela):
             [sg.Radio('Alterar Mesa', "RD1", key='2')],
             [sg.Radio('Excluir Mesa', "RD1", key='3')],
             [sg.Radio('Listar Mesa', "RD1", key='4')],
-            [sg.Radio('Retornar', "RD1", key='0')], 
-            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
+            # [sg.Radio('Retornar', "RD1", key='0')], 
+            [sg.Cancel('Voltar'), sg.Button('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
@@ -80,6 +81,8 @@ class TelaMesa(Tela):
             sg.Popup('-------- LISTA DE MESAS ----------', string_todas_mesas, title='')
         except KeyError as e:
             sg.Popup("Erro ao exibir dados da mesa: ", str(e))
+
+
 
     def seleciona_mesa(self):
         sg.ChangeLookAndFeel('TealMono')
