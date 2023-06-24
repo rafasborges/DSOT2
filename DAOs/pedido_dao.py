@@ -1,8 +1,6 @@
-import pickle
 from DAOs.dao import DAO
 from entidades.pedido import Pedido
 
-#cada entidade terá uma classe dessa, implementação bem simples.
 class PedidoDAO(DAO):
     def __init__(self):
         super().__init__('pedidos.pkl')

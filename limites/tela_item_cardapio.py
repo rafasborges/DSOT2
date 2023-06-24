@@ -6,10 +6,10 @@ class TelaItemCardapio(Tela):
     self.__window = None
     self.init_opcoes()
 
-  # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
   def tela_opcoes(self):
     self.init_opcoes()
     button, values = self.open()
+    # opcao = 0
     if values['1']:
       opcao = 1
     if values['2']:
@@ -18,8 +18,6 @@ class TelaItemCardapio(Tela):
       opcao = 3
     if values['4']:
       opcao = 4
-    # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-    #Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
     if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
       opcao = 0
     self.close()
@@ -35,7 +33,7 @@ class TelaItemCardapio(Tela):
       [sg.Radio('Excluir Item', "RD1", key='3')],
       [sg.Radio('Listar Itens', "RD1", key='4')],
       [sg.Radio('Retornar', "RD1", key='0')],
-      [sg.Button('Voltar'), sg.Cancel('Confirmar')]
+      [sg.Cancel('Voltar'), sg.Button('Confirmar')]
     ]
     self.__window = sg.Window('Sistema de restaurante').Layout(layout)
 
@@ -136,53 +134,3 @@ class TelaItemCardapio(Tela):
   def open(self):
     button, values = self.__window.Read()
     return button, values
-
-  """
-    button, values = self.open()
-        if len(values['nome']) > 0:
-          nome = str(values['nome'])
-        if len(values['descricao']) > 0:
-          descricao = str(values['descricao'])
-        if len(values['codigo_item']) > 0:
-          codigo_item = int(values['codigo_item'])
-        if len(values['preco']) > 0:
-          preco = float(values['preco'])
-        else:
-          nome, descricao, codigo_item, preco = "", "", 900, 900
-
-        variavel = values.get('900', 'insight')
-
-        if variavel != "insight":
-          if variavel or button in (None, 'Voltar'):
-            opcao = 0
-          # self.close()
-          return opcao
-        print(values)
-
-        if button != "Voltar" and ((self.checa_valor(nome) == True) or
-                  (self.checa_valor(descricao) == True) or
-                  not isinstance(codigo_item, int) or
-                  not isinstance(preco, float)):
-             raise ValueError
-  """
-
-  """
-          if len(values['codigo_item']) > 0:
-          codigo = int(values['codigo_item'])
-        else:
-          codigo = 0
-
-        variavel = values.get('0', 'insight')
-        if variavel != "insight":
-          if variavel or button in (None, 'Voltar'):
-            opcao = 0
-          return opcao
-                
-        if button != 'Voltar' and (not isinstance(codigo, int)):
-          raise ValueError
-        self.close()
-        return codigo
-      except ValueError:
-        sg.Popup("Código do item inválido. O código deve ser um valor inteiro.", title = "ERRO")
-        self.close()
-  """

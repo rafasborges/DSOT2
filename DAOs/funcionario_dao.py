@@ -1,7 +1,7 @@
 from DAOs.dao import DAO
 from entidades.funcionario import Funcionario
 
-#cada entidade terá uma classe dessa, implementação bem simples.
+
 class FuncionarioDAO(DAO):
     def __init__(self):
         super().__init__('funcionario.pkl')

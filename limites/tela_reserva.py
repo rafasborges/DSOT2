@@ -7,10 +7,10 @@ class TelaReserva(Tela):
         self.__window = None
         self.init_opcoes()
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
+        # opcao = 0
         if values['1']:
             opcao = 1
         if values['2']:
@@ -19,15 +19,12 @@ class TelaReserva(Tela):
             opcao = 3
         if values['4']:
             opcao = 4
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
         if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
             opcao = 0
         self.close()
         return opcao
 
     def init_opcoes(self):
-        # sg.theme_previewer()
         sg.ChangeLookAndFeel('TealMono')
         layout = [
             [sg.Text('-------- RESERVAS ----------', font=("Helvica", 25))],
@@ -42,8 +39,6 @@ class TelaReserva(Tela):
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
-    # opção de tratamento: adicionar um if e só coletar nome e telefone se o button é 'Confirmar'
     def pega_dados_reserva(self):
         sg.ChangeLookAndFeel('TealMono')
         while True:
@@ -72,12 +67,11 @@ class TelaReserva(Tela):
                 or len(cliente_cpf) != 11):
               raise ValueError
             self.close()
-            return {"id": id, "mesa_num": mesa_num, "cliente_cpf": cliente_cpf, "funcionario_nome": funcionario_nome}
+            return {"id": id, "mesa_num": mesa_num, "cliente_cpf": cliente_cpf, "funcionario_nome": funcionario_nome.upper()}
           except ValueError:
             sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas inteiros para o id e número da mesa e string para o nome do funcionário!", title = "ERRO")
             self.close()
-          
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+
     def mostra_reserva(self, dados_reserva):
       try:
         string_todas_reservas = ""
@@ -91,8 +85,6 @@ class TelaReserva(Tela):
       except KeyError as e:
         sg.Popup("Erro ao exibir dados da reserva: ", str(e))
 
-
-    # fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def seleciona_reserva(self):
         sg.ChangeLookAndFeel('TealMono')
 

@@ -1,6 +1,6 @@
 from DAOs.dao import DAO
 from entidades.mesa import Mesa
-#cada entidade terá uma classe dessa, implementação bem simples.
+
 class MesaDAO(DAO):
     def __init__(self):
         super().__init__('mesas.pkl')
