@@ -9,7 +9,7 @@ class TelaFuncionario(Tela):
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
-        opcao = 0
+        # opcao = 0
         if values['1']:
           opcao = 1
         if values['2']:
@@ -20,8 +20,8 @@ class TelaFuncionario(Tela):
           opcao = 4
         if values['5']:
           opcao = 5
-        # if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
-        #   opcao = 0
+        if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
+          opcao = 0
         self.close()
         return opcao
 
@@ -35,7 +35,7 @@ class TelaFuncionario(Tela):
         [sg.Radio('Excluir Funcionário', "RD1", key='3')],
         [sg.Radio('Listar Funcionário', "RD1", key='4')],
         [sg.Radio('Ver salário Funcionário', "RD1", key='5')],
-        # [sg.Radio('Retornar', "RD1", key='0')],
+        [sg.Radio('Retornar', "RD1", key='0')],
         [sg.Cancel('Voltar'), sg.Button('Confirmar')]
       ]
       self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
