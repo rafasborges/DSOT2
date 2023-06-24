@@ -10,6 +10,7 @@ class TelaReserva(Tela):
     def tela_opcoes(self):
         self.init_opcoes()
         button, values = self.open()
+        opcao = 0
         if values['1']:
             opcao = 1
         if values['2']:
@@ -18,8 +19,8 @@ class TelaReserva(Tela):
             opcao = 3
         if values['4']:
             opcao = 4
-        if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
-            opcao = 0
+        # if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
+        #     opcao = 0
         self.close()
         return opcao
 
@@ -32,7 +33,7 @@ class TelaReserva(Tela):
             [sg.Radio('Listar Reserva', "RD1", key='2')],
             [sg.Radio('Excluir Reserva', "RD1", key='3')],
             [sg.Radio('Calcular valor total de uma Reserva', "RD1", key='4')],
-            [sg.Radio('Retornar', "RD1", key='0')],
+            # [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
