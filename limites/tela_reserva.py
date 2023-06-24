@@ -34,8 +34,9 @@ class TelaReserva(Tela):
             [sg.Text('Escolha sua opção', font=("Helvica", 15))],
             [sg.Radio('Incluir Reserva', "RD1", key='1')],
             [sg.Radio('Listar Reserva', "RD1", key='2')],
-            [sg.Radio('Excluir Reserva', "RD1", key='3')],
-            [sg.Radio('Calcular valor total de uma Reserva', "RD1", key='4')],
+            [sg.Radio('Alterar Reserva', "RD1", key='3')],
+            [sg.Radio('Excluir Reserva', "RD1", key='4')],
+            [sg.Radio('Calcular valor total de uma Reserva', "RD1", key='5')],
             [sg.Radio('Retornar', "RD1", key='0')],
             [sg.Button('Voltar'), sg.Cancel('Confirmar')]
         ]

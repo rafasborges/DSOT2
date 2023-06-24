@@ -70,7 +70,30 @@ class ControladorReserva():
         except (MesaNaoExistenteException, ClienteNaoExistenteException, FuncionarioNaoExistenteException, ReservaRepetidaException, CapacidadeDaMesaExcedidaException, NaoHaMesasDisponiveisException) as e:
             self.__tela_reserva.mostra_mensagem(str(e))
 
+    def alterar_reservas(self):
+        self.lista_reservas()
+        id_reserva = self.__tela_reserva.seleciona_reserva()
+        if id_reserva == None:
+            return
+        reserva = self.pega_reserva_por_id(id_reserva)
 
+        try:
+            if (reserva is not None):
+                novos_dados_reserva = self.__tela_reserva.pega_dados_reserva()
+                if novos_dados_reserva == None or novos_dados_reserva['id'] == 0:
+                    return
+                reserva.id_reserva = novos_dados_reserva["id"]
+                reserva.id_reserva = novos_dados_reserva["mesa_num"]
+                reserva.id_reserva = novos_dados_reserva["cliente_cpf"]
+                reserva.id_reserva = novos_dados_reserva["funcionario_nome"]
+
+
+                self.__reserva_DAO.update(reserva)
+                self.lista_reservas()
+            else:
+                raise ReservaNaoExistenteException(id_reserva)
+        except ReservaNaoExistenteException as e:
+            self.__tela_reserva.mostra_mensagem(e)
     def lista_reservas(self):
         if len(self.__reserva_DAO.get_all()) == 0:
             self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
@@ -121,7 +144,7 @@ class ControladorReserva():
         self.__controlador_sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.incluir_reserva, 2: self.lista_reservas, 3: self.excluir_reserva, 4: self.calcular_ganho_reserva, 0: self.retornar}
+        lista_opcoes = {1: self.incluir_reserva, 2: self.lista_reservas, 3: self.alterar_reservas,4: self.excluir_reserva, 5: self.calcular_ganho_reserva, 0: self.retornar}
 
         continua = True
         while continua:
