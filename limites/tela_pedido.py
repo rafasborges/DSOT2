@@ -17,7 +17,7 @@ class TelaPedido(Tela):
             opcao = 2
         if values['3']:
             opcao = 3
-        if values['0'] or button in (None, 'Cancelar', 'Voltar', 'Sair'):
+        if button in (None, 'Cancelar', 'Voltar', 'Sair'):
             opcao = 0
         self.close()
         return opcao
@@ -30,8 +30,7 @@ class TelaPedido(Tela):
             [sg.Radio('Incluir Pedido', "RD1", key='1')],
             [sg.Radio('Listar Pedido', "RD1", key='2')],
             [sg.Radio('Excluir Pedido', "RD1", key='3')],
-            [sg.Radio('Retornar', "RD1", key='0')],
-            [sg.Button('Voltar'), sg.Cancel('Confirmar')]
+            [sg.Cancel('Voltar'), sg.Button('Confirmar')]
         ]
         self.__window = sg.Window('Sistema de Restaurante').Layout(layout)
 
