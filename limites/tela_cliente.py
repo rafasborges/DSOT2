@@ -44,7 +44,7 @@ class TelaCliente(Tela):
                     [sg.Text('-------- DADOS CLIENTE ----------', font=("Helvica", 25))],
                     [sg.Text('Nome:', size=(15, 1)), sg.InputText('', key='nome')],
                     [sg.Text('CPF:', size=(15, 1)), sg.InputText('', key='cpf')],
-                    [sg.Text('Número de convidados:', size=(17, 1)), sg.InputText('', key='num_convidados', size=(43, 1))],
+                    [sg.Text('N. de convidados:', size=(15, 1)), sg.InputText('', key='num_convidados')],
                     [sg.Text('Idade:', size=(15, 1)), sg.InputText('', key='idade')],
                     [sg.Cancel('Voltar'), sg.Button('Confirmar')]
                 ]
@@ -63,7 +63,7 @@ class TelaCliente(Tela):
                 if ((self.checa_valor(nome) == True) or len(cpf) != 11 or (not isinstance(num_convidados, int)) or (not isinstance(idade, int))):
                     raise ValueError
                 self.close()
-                return {"nome": nome, "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
+                return {"nome": nome.upper(), "cpf": cpf, "num_convidados": num_convidados, "idade": idade}
             except ValueError:
                     sg.Popup("Dados incorretos! O CPF deve conter 11 dígitos! Utilize apenas strings para o nome e números inteiros para a idade e número de convidados!", title = "ERRO")
                     self.close()
