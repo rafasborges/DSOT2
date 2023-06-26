@@ -73,32 +73,50 @@ class ControladorReserva():
             return
         reserva = self.pega_reserva_por_id(id_reserva)
 
+        self.__controlador_sistema.controlador_clientes.lista_clientes()
+        self.__controlador_sistema.controlador_funcionarios.lista_funcionarios()
+        self.__controlador_sistema.controlador_mesas.lista_mesas_disponiveis()
+
         try:
             if (reserva is not None):
                 novos_dados_reserva = self.__tela_reserva.pega_dados_reserva()
                 if novos_dados_reserva == None or novos_dados_reserva['id'] == 0:
                     return
                 reserva.id_reserva = novos_dados_reserva["id"]
-                reserva.id_reserva = novos_dados_reserva["mesa_num"]
-                reserva.id_reserva = novos_dados_reserva["cliente_cpf"]
-                reserva.id_reserva = novos_dados_reserva["funcionario_nome"]
 
+                reserva.cliente = self.__controlador_sistema.controlador_clientes.pega_cliente_por_cpf(
+                    novos_dados_reserva["cliente_cpf"])
+                reserva.funcionario = self.__controlador_sistema.controlador_funcionarios.pega_funcionario_por_nome(
+                    novos_dados_reserva["funcionario_nome"])
+                reserva.mesa = self.__controlador_sistema.controlador_mesas.pega_mesa_por_numero(
+                    novos_dados_reserva["mesa_num"])
 
-                self.__reserva_DAO.update(reserva)
-                self.lista_reservas()
+                try:
+                    if reserva.mesa is None:
+                        raise MesaNaoExistenteException(novos_dados_reserva["mesa_num"])
+                    if reserva.cliente is None:
+                        raise ClienteNaoExistenteException(novos_dados_reserva["cliente_cpf"])
+                    if reserva.funcionario is None:
+                        raise FuncionarioNaoExistenteException(novos_dados_reserva["funcionario_nome"])
+                    self.__reserva_DAO.update(reserva)
+                    self.lista_reservas()
+                except (MesaNaoExistenteException, ClienteNaoExistenteException, FuncionarioNaoExistenteException) as e:
+                    self.__tela_reserva.mostra_mensagem(str(e))
+
             else:
                 raise ReservaNaoExistenteException(id_reserva)
         except ReservaNaoExistenteException as e:
             self.__tela_reserva.mostra_mensagem(e)
+
     def lista_reservas(self):
         if len(self.__reserva_DAO.get_all()) == 0:
             self.__tela_reserva.mostra_mensagem("ATENÇÃO: Lista de reservas vazia")
         dados_reservas = []
         for e in self.__reserva_DAO.get_all():
             dados_reservas.append({"nome_cliente": e.cliente.nome,
-                                   "nome_funcionario": e.funcionario.nome,
-                                   "num_mesa": e.mesa.numero,
-                                   "id_reserva": e.id})
+                               "nome_funcionario": e.funcionario.nome,
+                               "num_mesa": e.mesa.numero,
+                               "id_reserva": e.id})
         self.__tela_reserva.mostra_reserva(dados_reservas)
 
     def excluir_reserva(self):
